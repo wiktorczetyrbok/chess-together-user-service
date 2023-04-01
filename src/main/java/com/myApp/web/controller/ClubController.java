@@ -6,10 +6,7 @@ import com.myApp.web.service.ClubService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -52,6 +49,12 @@ public class ClubController {
     public String deleteClub(@PathVariable("clubId") long clubId){
         clubService.delete(clubId);
         return "redirect:/clubs";
+    }
+    @GetMapping("/clubs/search")
+    public String searchClub(@RequestParam(value = "query") String query, Model model){
+        List<ClubDto> clubs = clubService.searchClubs(query);
+        model.addAttribute("clubs", clubs);
+        return "clubs-list";
     }
 
     @GetMapping("/clubs/{clubId}/edit")
