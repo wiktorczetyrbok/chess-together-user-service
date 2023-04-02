@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class EventController {
     private EventService eventService;
@@ -18,6 +20,20 @@ public class EventController {
     @Autowired
     public EventController(EventService eventService) {
         this.eventService = eventService;
+    }
+
+    @GetMapping("/events")
+    public String eventList(Model model){
+        List<EventDto> events = eventService.findAllEvents();
+        model.addAttribute("events", events);
+        return "events-list";
+
+    }
+    @GetMapping("/events/{eventId}")
+    public String viewEvent(@PathVariable("eventId")Long eventId, Model model){
+        EventDto eventDto = eventService.findByEventId(eventId);
+        model.addAttribute("event", eventDto);
+        return "events-detail";
     }
     @GetMapping("/events/{clubId}/new")
     public String createEventForm(@PathVariable("clubId") Long clubId, Model model){
@@ -31,5 +47,10 @@ public class EventController {
                               Model model){
         eventService.createEvent(clubId, eventDto);
         return "redirect:/clubs/" + clubId;
+    }
+    @GetMapping("/events/{eventId}/delete")
+    public String deleteEvent(@PathVariable("eventId")Long eventId){
+        eventService.deleteEvent(eventId);
+        return "redirect:/events";
     }
 }

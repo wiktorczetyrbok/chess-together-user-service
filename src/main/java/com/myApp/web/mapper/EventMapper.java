@@ -17,4 +17,17 @@ public class EventMapper {
                 .build();
 
     }
+    public static EventDto mapToEventDto(Event event){
+        return EventDto.builder()
+                .id(event.getId())
+                .name(event.getName())
+                .startTime(event.getStartTime())
+                .endTime(event.getEndTime())
+                .type(event.getType())
+                .photoUrl(event.getPhotoUrl())
+                .createdOn(event.getCreatedOn())
+                .updatedOn(event.getUpdatedOn())
+                .build();
+
+    }
 }
