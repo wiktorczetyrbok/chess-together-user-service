@@ -3,7 +3,7 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}">
 <head>
-  <title>Club Create</title>
+  <title>Club Details</title>
 </head>
 <body class="d-flex flex-column">
   <section layout:fragment="body">
@@ -27,8 +27,10 @@
               <div class="small text-muted" th:text="${club.createdOn}"></div>
               <h2 class="card-title">About this chess club</h2>
               <p class="card-text" th:text="${club.content}"></p>
-              <a class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
-              <a class="btn btn-primary" th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create Event</a>
+              <div th:if="${user.id} ==${club.createdBy.id}">
+               <a class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
+               <a class="btn btn-primary" th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create Event</a>
+              </div>
             </div>
           </div>
           <!-- Nested row for non-featured blog posts-->

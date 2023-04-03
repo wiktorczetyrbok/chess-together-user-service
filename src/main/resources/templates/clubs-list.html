@@ -9,6 +9,9 @@
 <main class="flex-shrink-0">
     <section layout:fragment="body" class="py-5">
         <div class="container px-5 my-5">
+            <div th:if="${param.success}" class="alert alert-success mt-5">
+                You are registered successfully!
+            </div>
             <div class="text-center mb-5">
                 <h1 class="fw-bolder">Find Chess Clubs</h1>
                 <p class="lead fw-normal text-muted mb-0">Groups of passionate near you</p>
@@ -25,7 +28,7 @@
                         <a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a>
                     </div>
                     <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">View</a>
-                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
+                    <a th:if="${user.id} ==${club.createdBy.id}" class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
                 </div>
             </div>
         </div>
