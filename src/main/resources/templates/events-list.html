@@ -25,7 +25,7 @@
                         <a th:text="${event.name}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a>
                     </div>
                     <a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">View</a>
-                    <div th:if="${user.id} == ${event.club.createdBy.id}">
+                    <div th:if="${user != null and ((user.id == null and event.club.createdBy.id == null) or user.id != null and user.id == event.club.createdBy.id)}">
                         <a th:href="@{/events/{eventId}/edit(eventId=${event.id})}" class="btn btn-primary">Edit</a>
                     </div>
                 </div>

@@ -6,12 +6,12 @@ import com.myApp.web.model.Event;
 
 import java.util.stream.Collectors;
 
+import static com.myApp.web.mapper.EventMapper.mapToEvent;
 import static com.myApp.web.mapper.EventMapper.mapToEventDto;
 
 public class ClubMapper {
     public static Club mapToClub(ClubDto club) {
         Club clubMaped = Club.builder()
-                .id(club.getId())
                 .id(club.getId())
                 .title(club.getTitle())
                 .photoUrl(club.getPhotoUrl())
@@ -19,6 +19,7 @@ public class ClubMapper {
                 .createdBy(club.getCreatedBy())
                 .createdOn(club.getCreatedOn())
                 .updatedOn(club.getUpdatedOn())
+                .events(club.getEvents().stream().map((event)-> mapToEvent(event)).collect(Collectors.toList()))
                 .build();
         return clubMaped;
     }
