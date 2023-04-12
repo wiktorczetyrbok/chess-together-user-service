@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.myApp</groupId>
-	<artifactId>web</artifactId>
+	<artifactId>web</artifactId>♦
 	<version>0.0.1-SNAPSHOT</version>
 	<name>web</name>
 	<description>Demo project for Spring Boot</description>
@@ -33,6 +33,11 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.26</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.sornerol</groupId>
+			<artifactId>chesscom-pubapi-wrapper</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -66,6 +71,12 @@
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-core</artifactId>
+			<version>1.26.0</version>
 		</dependency>
 	</dependencies>
 

@@ -11,7 +11,7 @@
       <div class="container">
         <div class="text-center my-5">
           <h1 class="fw-bolder" th:text="${club.title}"></h1>
-          <p class="lead mb-0">Charlotte, NC</p>
+          <p class="lead mb-0" th:text="${club.city}"></p>
         </div>
       </div>
     </header>
@@ -24,7 +24,7 @@
           <div class="card mb-4">
             <a href="#!"><img class="card-img-top" th:src="${club.photoUrl}" alt="..." /></a>
             <div class="card-body">
-              <div class="small text-muted" th:text="${club.createdOn}"></div>
+              <div class="small text-muted" th:text="${club.createdOn} "></div>
               <h2 class="card-title">About this chess club</h2>
               <p class="card-text" th:text="${club.content}"></p>
               <div th:if="${user.id} ==${club.createdBy.id}">
@@ -40,9 +40,9 @@
               <div th:each="event :${club.events}"class="card mb-4">
                 <a href="#!"><img class="card-img-top" th:src="${event.photoUrl}" alt="..." /></a>
                 <div class="card-body">
-                  <div class="small text-muted">January 1, 2023</div>
+                  <div class="small text-muted" th:text="${event.startTime} "></div>
                   <h2 th:text="${event.name}"class="card-title h4"></h2>
-                  <p class="card-text">Lorem impsum</p>
+                  <p class="card-text" th:text="${event.type}"></p>
                   <a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">Read more</a>
                 </div>
               </div>

@@ -21,6 +21,8 @@ public class ClubDto {
     @Size(max = 255, message = "Content too long")
     @NotEmpty(message="Content should not be empty")
     private String content;
+    @NotEmpty(message="City should not be empty")
+    private String city;
     private UserEntity createdBy;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
