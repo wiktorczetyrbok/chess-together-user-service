@@ -7,13 +7,9 @@ import com.myApp.web.security.SecurityUtil;
 import com.myApp.web.service.EventService;
 import com.myApp.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,7 +37,12 @@ public class EventController {
         model.addAttribute("events", events);
         return "events-list";
     }
-
+    @GetMapping("/events/search")
+    public String searchEvents(@RequestParam(value = "query") String query, Model model){
+        List<EventDto> events = eventService.searchEvents(query);
+        model.addAttribute("events", events);
+        return "events-list";
+    }
     @GetMapping("/events/{eventId}")
     public String viewEvent(@PathVariable("eventId")Long eventId, Model model) {
         UserEntity user = new UserEntity();

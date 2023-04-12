@@ -34,9 +34,7 @@ public class UserServiceImpl implements UserService {
         RoleEntity role = roleRepository.findByName("USER");
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
-
     }
-
     @Override
     public UserEntity findByEmail(String email) {
         return userRepository.findByEmail(email);

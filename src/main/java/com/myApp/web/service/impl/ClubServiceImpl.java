@@ -62,6 +62,4 @@ public class ClubServiceImpl implements ClubService {
         Club club = clubRepository.findById(clubId).get();
         return mapToClubDto(club);
     }
-
-
 }
