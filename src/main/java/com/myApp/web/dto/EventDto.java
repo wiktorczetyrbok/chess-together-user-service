@@ -1,6 +1,7 @@
 package com.myApp.web.dto;
 
 import com.myApp.web.model.Club;
+import com.myApp.web.model.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -29,4 +31,5 @@ public class EventDto {
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
     private Club club;
+    private List<UserEntity> assignedUsers;
 }

@@ -9,6 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -33,5 +35,7 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "club_id",nullable = false)
     private Club club;
+    @ManyToMany(mappedBy = "events")
+    private List<UserEntity> assignedUsers = new ArrayList<>();
 
 }

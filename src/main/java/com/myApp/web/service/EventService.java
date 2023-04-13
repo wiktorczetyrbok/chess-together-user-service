@@ -2,6 +2,7 @@ package com.myApp.web.service;
 
 import com.myApp.web.dto.ClubDto;
 import com.myApp.web.dto.EventDto;
+import com.myApp.web.dto.UserDto;
 
 import java.util.List;
 
@@ -13,5 +14,8 @@ public interface EventService {
 
     void deleteEvent(Long eventId);
     List<EventDto> searchEvents (String query);
+
+    void assignUserToEvent(Long eventId, Long userId);
+    List<UserDto> findAssignedUsers(Long eventId);
 
 }

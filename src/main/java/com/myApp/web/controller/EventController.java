@@ -1,6 +1,7 @@
 package com.myApp.web.controller;
 
 import com.myApp.web.dto.EventDto;
+import com.myApp.web.dto.UserDto;
 import com.myApp.web.model.Event;
 import com.myApp.web.model.UserEntity;
 import com.myApp.web.security.SecurityUtil;
@@ -52,9 +53,13 @@ public class EventController {
             user = userService.findByUsername(username);
             model.addAttribute("user", user);
         }
+        List<UserDto> assignedUsers = eventService.findAssignedUsers(eventId);
+
+
         model.addAttribute("club", eventDto.getClub());
         model.addAttribute("user", user);
         model.addAttribute("event", eventDto);
+        model.addAttribute("assignedUsers", assignedUsers);
         return "events-detail";
     }
     @GetMapping("/events/{clubId}/new")
@@ -69,6 +74,11 @@ public class EventController {
                               Model model){
         eventService.createEvent(clubId, eventDto);
         return "redirect:/clubs/" + clubId;
+    }
+    @GetMapping("/events/{eventId}/assignUser")
+    public String assignUserToEvent(@PathVariable("eventId") Long eventId, @RequestParam("userId") Long userId) {
+        eventService.assignUserToEvent(eventId, userId);
+        return "redirect:/events/" + eventId;
     }
     @GetMapping("/events/{eventId}/delete")
     public String deleteEvent(@PathVariable("eventId")Long eventId){

@@ -15,20 +15,18 @@
       </div>
     </div>
   </header>
-  <!-- Page content-->
   <div class="container">
     <div class="row">
-      <!-- Blog entries-->
       <div class="col-lg-8">
-        <!-- Featured blog post-->
         <div class="card mb-4">
           <a href="#!"><img class="card-img-top" th:src="${event.photoUrl}" alt="..." /></a>
           <div class="card-body">
             <div class="small text-muted" th:text="${event.createdOn}"></div>
             <h2 class="card-title">About this event</h2>
             <p class="card-text" th:text="${event.type}"></p>
-            <div th:if="${user.id} == ${event.club.createdBy.id}">
-              <a class="btn btn-primary" th:href="@{/events/{eventId}/delete(eventId=${event.id})}">Delete</a>
+            <div >
+              <a class="btn btn-primary" th:href="@{/events/{eventId}/assignUser(eventId=${event.id},userId=${user.id})}">Join</a>
+              <a th:if="${user.id} == ${event.club.createdBy.id}" class="btn btn-primary" th:href="@{/events/{eventId}/delete(eventId=${event.id})}">Delete</a>
             </div>
           </div>
         </div>

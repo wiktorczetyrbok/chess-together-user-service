@@ -1,8 +1,6 @@
 package com.myApp.web.controller;
 
 import com.myApp.web.model.ChessComPlayer;
-import io.github.sornerol.chess.pubapi.client.LeaderboardsClient;
-import io.github.sornerol.chess.pubapi.domain.leaderboards.LeaderboardEntry;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,8 +20,6 @@ public class LeaderboardController {
         List<ChessComPlayer> topPlayers = new ArrayList<>();
         Document document = Jsoup.connect("https://www.chess.com/players").timeout(6000).get();
         Elements players = document.select("div.post-preview-list-component");
-
-
         for (Element player : players.select("div.post-author-component")) {
             Element nameElement = player.selectFirst(".post-author-name");
             String name = nameElement.text();

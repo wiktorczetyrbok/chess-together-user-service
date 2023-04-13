@@ -20,6 +20,8 @@ public class UserEntity
     private String username;
     private String email;
     private String password;
+    private String avatarUrl;
+    private Integer rating;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_roles",
@@ -27,4 +29,11 @@ public class UserEntity
             inverseJoinColumns= {@JoinColumn(name = "role_id",referencedColumnName = "id")}
     )
     private List<RoleEntity> roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name= "user_events",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name="event_id", referencedColumnName = "id")}
+    )
+    private List<Event> events= new ArrayList<>();
 }

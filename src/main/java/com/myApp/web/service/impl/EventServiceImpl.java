@@ -2,29 +2,37 @@ package com.myApp.web.service.impl;
 
 import com.myApp.web.dto.ClubDto;
 import com.myApp.web.dto.EventDto;
+import com.myApp.web.dto.UserDto;
 import com.myApp.web.model.Club;
 import com.myApp.web.model.Event;
+import com.myApp.web.model.UserEntity;
 import com.myApp.web.repository.ClubRepository;
 import com.myApp.web.repository.EventRepository;
+import com.myApp.web.repository.UserRepository;
 import com.myApp.web.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.myApp.web.mapper.ClubMapper.mapToClubDto;
 import static com.myApp.web.mapper.EventMapper.mapToEvent;
 import static com.myApp.web.mapper.EventMapper.mapToEventDto;
+import static com.myApp.web.mapper.UserMapper.mapToUserDto;
 
 @Service
 public class EventServiceImpl implements EventService {
     private EventRepository eventRepository;
     private ClubRepository clubRepository;
+    private UserRepository userRepository;
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository) {
+    public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.clubRepository = clubRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -57,5 +65,31 @@ public class EventServiceImpl implements EventService {
     public List<EventDto> searchEvents(String query) {
         List<Event> events = eventRepository.searchEvents(query);
         return events.stream().map(event -> mapToEventDto(event)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void assignUserToEvent(Long eventId, Long userId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+        List<UserEntity> assignedUsers;
+        assignedUsers = event.getAssignedUsers();
+        assignedUsers.add(userRepository.findById(userId).get());
+        event.setAssignedUsers(assignedUsers);
+
+        List<Event> assignedEvents;
+        assignedEvents = user.getEvents();
+        user.setEvents(assignedEvents);
+
+        eventRepository.save(event);
+        userRepository.save(user);
+    }
+    public List<UserDto> findAssignedUsers(Long eventId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event not found"));
+
+        List<UserDto> assignedUsers = event.getAssignedUsers()
+                .stream()
+                .map(user -> mapToUserDto(user)).collect(Collectors.toList());
+
+        return assignedUsers;
     }
 }
