@@ -1,5 +1,6 @@
 package com.myApp.web.service.impl;
 
+import com.myApp.web.dto.ClubDto;
 import com.myApp.web.dto.EventDto;
 import com.myApp.web.model.Club;
 import com.myApp.web.model.Event;
@@ -52,5 +53,9 @@ public class EventServiceImpl implements EventService {
     public void deleteEvent(Long eventId) {
         eventRepository.deleteById(eventId);
     }
-
+    @Override
+    public List<EventDto> searchEvents(String query) {
+        List<Event> events = eventRepository.searchEvents(query);
+        return events.stream().map(event -> mapToEventDto(event)).collect(Collectors.toList());
+    }
 }

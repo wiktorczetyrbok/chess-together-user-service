@@ -3,32 +3,43 @@ package com.myApp.web.controller;
 import com.myApp.web.model.ChessComPlayer;
 import io.github.sornerol.chess.pubapi.client.LeaderboardsClient;
 import io.github.sornerol.chess.pubapi.domain.leaderboards.LeaderboardEntry;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class LeaderboardController {
     @GetMapping("/leaderboard")
-    public String leaderboard(Model model){
+    public String leaderboard(Model model) throws IOException {
         List<ChessComPlayer> topPlayers = new ArrayList<>();
+        Document document = Jsoup.connect("https://www.chess.com/players").timeout(6000).get();
+        Elements players = document.select("div.post-preview-list-component");
 
-        LeaderboardEntry entry = new LeaderboardEntry();
-        LeaderboardsClient client = new LeaderboardsClient();
-        //client.getLeaderboards().getDaily960Leaderboard();
-        try {
-            for (int i = 1; i < 10; i++) {
-                ChessComPlayer player = new ChessComPlayer(i, entry.getUsername(), entry.getScore());
-                topPlayers.add(player);
+
+        for (Element player : players.select("div.post-author-component")) {
+            Element nameElement = player.selectFirst(".post-author-name");
+            String name = nameElement.text();
+
+            Element rankingElement = player.selectFirst(".master-players-world-stats");
+            String ranking = rankingElement.text();
+
+            Element imgElement = player.selectFirst(".post-author-thumbnail");
+            String imgSrc = imgElement.attr("src");
+
+            if( imgSrc.equals("/bundles/web/images/user-image.007dad08.svg")){
+                imgSrc = imgElement.attr("data-src");
             }
+            topPlayers.add(new ChessComPlayer(imgSrc, name, ranking));
         }
-        catch (Exception e) {
-            e.printStackTrace();
 
-        }
         model.addAttribute("topPlayers", topPlayers);
         return "leaderboard";
     }

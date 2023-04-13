@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class ChessComPlayer {
     private String username;
-    private int rating;
-    private int id;
+    private String rating;
+    private String photoUrl;
 
-    public ChessComPlayer(int id,String username, int rating) {
-        this.id = id;
+    public ChessComPlayer(String photoUrl,String username, String rating) {
+        this.photoUrl = photoUrl;
         this.username = username;
         this.rating = rating;
     }
