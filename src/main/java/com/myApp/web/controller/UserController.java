@@ -41,6 +41,6 @@ public class UserController {
         Long userId = userService.findByUsername(username).getId();
         user.setId(userId);
         userService.updateUser(user);
-        return "redirect:";
+        return "redirect:/";
     }
 }
