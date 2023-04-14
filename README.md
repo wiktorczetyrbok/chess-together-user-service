@@ -32,6 +32,14 @@ The application is built using Spring Boot and several other open-source librari
 
 - **CSS Bootstrap template**
 
+
+
+## Sreenshots
+![Alt text](/screens/home.png?raw=true "home")
+![Alt text](/screens/registration.png?raw=true "registration")
+![Alt text](/screens/club.png?raw=true "Sorting")
+![Alt text](/screens/event_details.png?raw=true "event_details")
+![Alt text](/screens/edit_profile.png?raw=true "edit_profile")
 ## Getting Started
 
 To get started with Chess Together, follow these steps:
@@ -49,7 +57,6 @@ git clone https://github.com/your-username/chess-together.git
 mvn spring-boot:run
 ```
 5. Open a web browser and navigate to `http://localhost:8080` to access the application.
-
 ## Contributing
 
 Contributions to Chess Together are welcome! If you'd like to contribute code or report a bug, please open an issue or submit a pull request.
