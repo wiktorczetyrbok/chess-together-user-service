@@ -14,5 +14,7 @@ public interface UserService {
     UserEntity findByEmail(String email);
 
     UserEntity findByUsername(String username);
+    Optional<UserEntity> findByUserId(Long userId);
 
+    void updateUser(UserDto user);
 }

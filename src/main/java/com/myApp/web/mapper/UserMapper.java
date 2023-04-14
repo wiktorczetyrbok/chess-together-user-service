@@ -19,4 +19,16 @@ public class UserMapper {
                 .build();
 
     }
+    public static UserEntity mapToUser(UserDto user){
+        return UserEntity.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .avatarUrl(user.getAvatarUrl())
+                .rating(user.getRating())
+                .roles(user.getRoles())
+                .events(user.getEvents())
+                .build();
+    }
 }

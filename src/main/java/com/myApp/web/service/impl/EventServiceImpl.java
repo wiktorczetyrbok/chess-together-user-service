@@ -59,6 +59,16 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void deleteEvent(Long eventId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
+
+        if ( !event.getAssignedUsers().isEmpty()) {
+            List<UserEntity> users = event.getAssignedUsers();
+            for (UserEntity user : users) {
+                user.getEvents().remove(event);
+                userRepository.save(user);
+            }
+        }
+
         eventRepository.deleteById(eventId);
     }
     @Override
@@ -78,6 +88,8 @@ public class EventServiceImpl implements EventService {
 
         List<Event> assignedEvents;
         assignedEvents = user.getEvents();
+        assignedEvents.add(event);
+
         user.setEvents(assignedEvents);
 
         eventRepository.save(event);

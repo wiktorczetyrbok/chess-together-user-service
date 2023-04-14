@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface EventRepository extends JpaRepository<Event, Long> {
 
     void deleteById(Long eventId);
-//    void assignUserToEvent(Long eventId, Long userId);
     @Query("SELECT e FROM Event e WHERE e.name LIKE CONCAT ('%', :query, '%')")
     List<Event> searchEvents(String query);
 }

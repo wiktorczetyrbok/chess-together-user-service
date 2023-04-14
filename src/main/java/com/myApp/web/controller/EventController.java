@@ -1,5 +1,6 @@
 package com.myApp.web.controller;
 
+import com.myApp.web.dto.ClubDto;
 import com.myApp.web.dto.EventDto;
 import com.myApp.web.dto.UserDto;
 import com.myApp.web.model.Event;
@@ -76,7 +77,21 @@ public class EventController {
         return "redirect:/clubs/" + clubId;
     }
     @GetMapping("/events/{eventId}/assignUser")
-    public String assignUserToEvent(@PathVariable("eventId") Long eventId, @RequestParam("userId") Long userId) {
+    public String assignClubForm(@PathVariable("eventId") Long eventId, Model model) {
+        EventDto eventDto = eventService.findByEventId(eventId);
+
+        UserEntity user = new UserEntity();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null){
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user" , user);
+        model.addAttribute("event", eventDto);
+        return "event_assign";
+    }
+    @PostMapping("/events/{eventId}/assignUser")
+    public String updateUserToEvent(@PathVariable("eventId") Long eventId, @RequestParam("userId") Long userId) {
         eventService.assignUserToEvent(eventId, userId);
         return "redirect:/events/" + eventId;
     }

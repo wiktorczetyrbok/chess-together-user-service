@@ -24,13 +24,12 @@
           </div>
           <div class="form-group col-md-6">
             <label for="type">Type</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="type"
-                    name="photoUrl"
-                    th:field="*{type}"
-                    placeholder="Event type">
+            <select class="form-control" id="type" name="type" th:field="*{type}">
+              <option value="">Choose event type</option>
+              <option value="Blitz">Blitz</option>
+              <option value="Classic">Classic</option>
+              <option value="Bullet">Bullet</option>
+            </select>
             <p th:if="${#fields.hasErrors('type')}" class="text-danger" th:errors="*{type}"></p>
           </div>
         </div>
