@@ -14,8 +14,11 @@ import java.util.List;
 @Builder
 public class UserDto {
     private Long id;
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String password;
     private String avatarUrl;
     private Integer rating;

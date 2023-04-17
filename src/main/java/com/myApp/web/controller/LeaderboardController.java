@@ -15,28 +15,32 @@ import java.util.List;
 
 @Controller
 public class LeaderboardController {
+    //web scraping chess.com with Jsoup
     @GetMapping("/leaderboard")
     public String leaderboard(Model model) throws IOException {
         List<ChessComPlayer> topPlayers = new ArrayList<>();
-        Document document = Jsoup.connect("https://www.chess.com/players").timeout(6000).get();
+        Document document = Jsoup.connect("https://www.chess.com/players")
+                .timeout(6000)
+                .get();
+
         Elements players = document.select("div.post-preview-list-component");
+
         for (Element player : players.select("div.post-author-component")) {
-            Element nameElement = player.selectFirst(".post-author-name");
-            String name = nameElement.text();
+            String name = player.selectFirst(".post-author-name").text();
+            String ranking = player.selectFirst(".master-players-world-stats").text();
+            String imgSrc = player.selectFirst(".post-author-thumbnail")
+                    .attr("src");
 
-            Element rankingElement = player.selectFirst(".master-players-world-stats");
-            String ranking = rankingElement.text();
-
-            Element imgElement = player.selectFirst(".post-author-thumbnail");
-            String imgSrc = imgElement.attr("src");
-
-            if( imgSrc.equals("/bundles/web/images/user-image.007dad08.svg")){
-                imgSrc = imgElement.attr("data-src");
+            if (imgSrc.equals("/bundles/web/images/user-image.007dad08.svg")) {
+                imgSrc = player.selectFirst(".post-author-thumbnail")
+                        .attr("data-src");
             }
+
             topPlayers.add(new ChessComPlayer(imgSrc, name, ranking));
         }
 
         model.addAttribute("topPlayers", topPlayers);
+
         return "leaderboard";
     }
 

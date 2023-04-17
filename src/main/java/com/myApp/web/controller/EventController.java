@@ -45,6 +45,12 @@ public class EventController {
         model.addAttribute("events", events);
         return "events-list";
     }
+    @GetMapping("/events/searchByType")
+    public String searchByType(@RequestParam(value = "type") String type, Model model){
+        List<EventDto> events = eventService.searchEventsByType(type);
+        model.addAttribute("events", events);
+        return "events-list";
+    }
     @GetMapping("/events/{eventId}")
     public String viewEvent(@PathVariable("eventId")Long eventId, Model model) {
         UserEntity user = new UserEntity();

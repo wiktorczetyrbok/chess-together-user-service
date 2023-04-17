@@ -1,6 +1,5 @@
 package com.myApp.web.service.impl;
 
-import com.myApp.web.dto.ClubDto;
 import com.myApp.web.dto.EventDto;
 import com.myApp.web.dto.UserDto;
 import com.myApp.web.model.Club;
@@ -14,11 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.myApp.web.mapper.ClubMapper.mapToClubDto;
 import static com.myApp.web.mapper.EventMapper.mapToEvent;
 import static com.myApp.web.mapper.EventMapper.mapToEventDto;
 import static com.myApp.web.mapper.UserMapper.mapToUserDto;
@@ -74,6 +71,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventDto> searchEvents(String query) {
         List<Event> events = eventRepository.searchEvents(query);
+        return events.stream().map(event -> mapToEventDto(event)).collect(Collectors.toList());
+    }
+    @Override
+    public List<EventDto> searchEventsByType(String type) {
+        List<Event> events = eventRepository.searchEventsByType(type);
         return events.stream().map(event -> mapToEventDto(event)).collect(Collectors.toList());
     }
 

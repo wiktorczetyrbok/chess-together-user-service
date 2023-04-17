@@ -74,13 +74,10 @@ public class ClubControllerTest {
         club.setCity("Test city");
         clubRepository.save(club);
 
-        // perform GET request to retrieve the club by ID
         ResponseEntity<String> response = restTemplate.getForEntity("/clubs/" + club.getId(), String.class);
 
-        // assert that the response status code is OK
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        // assert that the response body contains the club title and photo URL
         assertTrue(response.getBody().contains("Test Club"));
         assertTrue(response.getBody().contains("https://example.com/test.jpg"));
     }

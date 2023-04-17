@@ -62,9 +62,9 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">Classic</a></li>
-                                    <li><a href="#!">Blitz</a></li>
-                                    <li><a href="#!">Bullet</a></li>
+                                    <li><a th:href="@{/events/searchByType(type='Classic', name=${name})}">Classic</a></li>
+                                    <li><a th:href="@{/events/searchByType(type='Blitz', name=${name})}">Blitz</a></li>
+                                    <li><a th:href="@{/events/searchByType(type='Bullet', name=${name})}">Bullet</a></li>
                                 </ul>
                             </div>
                         </div>
