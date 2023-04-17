@@ -26,6 +26,8 @@ The application is built using Spring Boot and several other open-source librari
 
 - **Spring Security**
 
+- **Spring Validation**
+
 - **Thymeleaf Security**
 
 - **Jsoup**
