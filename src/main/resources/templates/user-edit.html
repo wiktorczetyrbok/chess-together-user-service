@@ -10,7 +10,6 @@
   <section layout:fragment="body" class="py-5">
     <div class="container">
       <form role="form" method="post" th:action="@{/user/edit}" th:object="${user}">
-        <input type="hidden"  th:field="*{events}">
         <input type="hidden" th:field="*{roles}" >
         <input type="hidden"   th:field="*{password}">
         <input type="hidden"  th:field="*{username}"  >

@@ -14,11 +14,11 @@ import java.util.List;
 @Builder
 public class UserDto {
     private Long id;
-    @NotEmpty
+    @NotEmpty(message="Username should not be empty")
     private String username;
-    @NotEmpty
+    @NotEmpty(message="email should not be empty")
     private String email;
-    @NotEmpty
+    @NotEmpty(message="password should not be empty")
     private String password;
     private String avatarUrl;
     private Integer rating;
