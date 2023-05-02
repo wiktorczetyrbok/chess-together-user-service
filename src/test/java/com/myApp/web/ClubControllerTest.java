@@ -3,7 +3,9 @@ package com.myApp.web;
 import com.myApp.web.dto.ClubDto;
 import com.myApp.web.mapper.ClubMapper;
 import com.myApp.web.model.Club;
+import com.myApp.web.model.UserEntity;
 import com.myApp.web.repository.ClubRepository;
+import com.myApp.web.repository.UserRepository;
 import com.myApp.web.service.ClubService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -33,14 +36,18 @@ public class ClubControllerTest {
     @Autowired
     private ClubRepository clubRepository;
 
+    @Autowired
+    private UserRepository userRepository;
     @Test
     public void createClubTest() {
+        UserEntity testUser = userRepository.findByUsername("test");
         // create a new club DTO
         Club club = new Club();
         club.setTitle("Test Club");
         club.setPhotoUrl("https://example.com/test.jpg");
         club.setContent("Test content");
         club.setCity("Test city");
+        club.setCreatedBy(testUser);
         ClubMapper clubMapper = new ClubMapper();
         ClubDto clubDto = clubMapper.mapToClubDto(club);
 
@@ -66,12 +73,14 @@ public class ClubControllerTest {
 
     @Test
     public void getClubByIdTest() {
+        UserEntity testUser = userRepository.findByUsername("test");
         // create a test club
         Club club = new Club();
         club.setTitle("Test Club");
         club.setPhotoUrl("https://example.com/test.jpg");
         club.setContent("Test content");
         club.setCity("Test city");
+        club.setCreatedBy(testUser);
         clubRepository.save(club);
 
         ResponseEntity<String> response = restTemplate.getForEntity("/clubs/" + club.getId(), String.class);
