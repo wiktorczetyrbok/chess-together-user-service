@@ -14,10 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,9 +38,10 @@ public class ClubControllerTest {
     @Autowired
     private UserRepository userRepository;
     @Test
+    @WithMockUser(username="test", roles="USER") //to fix
     public void createClubTest() {
         UserEntity testUser = userRepository.findByUsername("test");
-        // create a new club DTO
+
         Club club = new Club();
         club.setTitle("Test Club");
         club.setPhotoUrl("https://example.com/test.jpg");
@@ -51,20 +51,15 @@ public class ClubControllerTest {
         ClubMapper clubMapper = new ClubMapper();
         ClubDto clubDto = clubMapper.mapToClubDto(club);
 
-
-        // perform POST request to create the new club
         ResponseEntity<Void> response = restTemplate.postForEntity("/clubs", clubDto, Void.class);
 
-        // assert that the response status code is a redirect to /clubs
         assertEquals(HttpStatus.FOUND, response.getStatusCode());
         assertTrue(response.getHeaders().getLocation().toString().endsWith("/clubs"));
 
-        // retrieve the newly created club from the database
         Optional<Club> clubs = clubRepository.findByTitle("Test Club");
         assertEquals(1, clubs.stream());
         Club createdClub = clubs.get();
 
-        // assert that the club fields match the DTO fields
         assertEquals("Test Club", createdClub.getTitle());
         assertEquals("https://example.com/test.jpg", createdClub.getPhotoUrl());
         assertEquals("Test content", createdClub.getContent());

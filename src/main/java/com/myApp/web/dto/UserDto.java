@@ -14,9 +14,12 @@ import java.util.List;
 @Builder
 public class UserDto {
     private Long id;
+
     @NotEmpty(message="Username should not be empty")
+    @Column(unique = true)
     private String username;
     @NotEmpty(message="email should not be empty")
+    @Column(unique = true)
     private String email;
     @NotEmpty(message="password should not be empty")
     private String password;
