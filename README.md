@@ -42,6 +42,8 @@ The application is built using Spring Boot and several other open-source librari
 ![Alt text](/screens/club.png?raw=true "Sorting")
 ![Alt text](/screens/event_details.png?raw=true "event_details")
 ![Alt text](/screens/edit_profile.png?raw=true "edit_profile")
+## ER Diagram
+![Alt text](/screens/diagram.png?raw=true "diagram")
 ## Getting Started
 
 To get started with Chess Together, follow these steps:
