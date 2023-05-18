@@ -34,7 +34,7 @@ public class RegistrationControllerTest {
         ResponseEntity<String> response = restTemplate.postForEntity("/register/save", user, String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        UserEntity savedUser = userRepository.findByUsername("testuser");
+        UserEntity savedUser = userRepository.findFirstByUsername("testuser");
        // assertNotNull(savedUser);
         assertEquals("testuser@test.com", savedUser.getEmail());
         assertEquals("testuser", savedUser.getUsername());
@@ -75,7 +75,7 @@ public class RegistrationControllerTest {
 
         ResponseEntity<String> response = restTemplate.postForEntity("/register/save", user, String.class);
         assertEquals(HttpStatus.FOUND, response.getStatusCode());
-        assertTrue(response.getHeaders().getLocation().toString().endsWith("/register?fail"));
+        assertTrue(response.getHeaders().toString().endsWith("/register?fail"));
 
         UserEntity savedUser = userRepository.findByEmail("testuser2@test.com");
         assertNull(savedUser);

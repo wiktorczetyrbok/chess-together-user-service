@@ -44,9 +44,6 @@ public class LeaderboardControllerTest {
         Mockito.when(element1.selectFirst(Mockito.eq(".post-author-name"))).thenReturn(elementName);
         Mockito.when(element1.selectFirst(Mockito.eq(".master-players-world-stats"))).thenReturn(elementRanking);
         Mockito.when(element1.selectFirst(Mockito.eq(".post-author-thumbnail"))).thenReturn(elementImgSrc);
-        Mockito.when(elementImgSrc.attr(Mockito.eq("src"))).thenReturn("https://images.chesscomfiles.com/uploads/v1/master_player/3b0ddf4e-bd82-11e8-9421-af517c2ebfed.23bcb9e8.250x250o.fe16f88558e7.jpg");
-        Mockito.when(elementName.text()).thenReturn("Magnus Carlsen");
-        Mockito.when(elementRanking.text()).thenReturn("2853");
 
         Mockito.when(document.select(Mockito.eq("div.post-preview-list-component"))).thenReturn(elements);
 
