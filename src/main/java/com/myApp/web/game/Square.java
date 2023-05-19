@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -13,4 +14,5 @@ public class Square {
     private int x;
     private int y;
     private Piece piece;
+
 }

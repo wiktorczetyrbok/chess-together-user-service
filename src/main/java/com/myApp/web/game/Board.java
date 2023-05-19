@@ -13,6 +13,5 @@ public class Board {
     private List<Square> squares;
     private List<Move> moves;
     private List<String> promotionPieces;
-
 }
 
