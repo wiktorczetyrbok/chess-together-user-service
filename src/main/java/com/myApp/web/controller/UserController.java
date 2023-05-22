@@ -24,6 +24,9 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+    public UserController() {
+
+    }
     @GetMapping("/users/edit")
     public String editUserForm(Model model) {
         String username = SecurityUtil.getSessionUser();
