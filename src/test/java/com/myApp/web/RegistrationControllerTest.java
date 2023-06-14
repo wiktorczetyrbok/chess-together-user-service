@@ -35,7 +35,7 @@ public class RegistrationControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         UserEntity savedUser = userRepository.findFirstByUsername("testuser");
-       // assertNotNull(savedUser);
+        assertNotNull(savedUser);
         assertEquals("testuser@test.com", savedUser.getEmail());
         assertEquals("testuser", savedUser.getUsername());
     }
