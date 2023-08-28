@@ -33,7 +33,7 @@ public class Event {
     private LocalDateTime updatedOn;
 
     @ManyToOne
-    @JoinColumn(name = "club_id",nullable = false)
+    @JoinColumn(name = "club_id", nullable = false)
     private Club club;
     @ManyToMany(mappedBy = "events")
     private List<UserEntity> assignedUsers = new ArrayList<>();

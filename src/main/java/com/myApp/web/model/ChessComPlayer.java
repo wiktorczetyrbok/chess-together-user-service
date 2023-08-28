@@ -10,7 +10,7 @@ public class ChessComPlayer {
     private String rating;
     private String photoUrl;
 
-    public ChessComPlayer(String photoUrl,String username, String rating) {
+    public ChessComPlayer(String photoUrl, String username, String rating) {
         this.photoUrl = photoUrl;
         this.username = username;
         this.rating = rating;

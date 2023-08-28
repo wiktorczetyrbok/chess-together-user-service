@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 public class PawnMoveCalc implements MoveCalc {
-    private List<Vector> moveVectors;
-    private List<Vector> captureVectors;
+    private final List<Vector> moveVectors;
+    private final List<Vector> captureVectors;
 
-    private SquareLocationNavigator squareLocationNavigator = new SquareLocationNavigator();
+    private final SquareLocationNavigator squareLocationNavigator = new SquareLocationNavigator();
 
     public PawnMoveCalc(String owner, boolean hasMoved) {
         moveVectors = new ArrayList<>();
@@ -36,13 +36,14 @@ public class PawnMoveCalc implements MoveCalc {
             captureVectors.add(new Vector(-1, -1));
         }
     }
+
     @Override
     public List<Move> getPossibleMoves(SquareLocation pieceLocation, Map<SquareLocation, SquareStatus> locationStatusMap) {
         List<Move> possibleMoves = new ArrayList<>();
         for (Vector moveVector : moveVectors) {
             SquareLocation moveLocation = squareLocationNavigator.applyVectorToSquareLocation(pieceLocation, moveVector);
             SquareStatus status = locationStatusMap.get(moveLocation);
-            if (status==SquareStatus.EMPTY) {
+            if (status == SquareStatus.EMPTY) {
                 Move move = new Move(pieceLocation.getX(), pieceLocation.getY(), moveLocation.getX(), moveLocation.getY());
                 possibleMoves.add(move);
             } else {
@@ -52,13 +53,14 @@ public class PawnMoveCalc implements MoveCalc {
         for (Vector captureVector : captureVectors) {
             SquareLocation captureLocation = squareLocationNavigator.applyVectorToSquareLocation(pieceLocation, captureVector);
             SquareStatus status = locationStatusMap.get(captureLocation);
-            if (status==SquareStatus.ENEMY) {
+            if (status == SquareStatus.ENEMY) {
                 Move move = new Move(pieceLocation.getX(), pieceLocation.getY(), captureLocation.getX(), captureLocation.getY());
                 possibleMoves.add(move);
             }
         }
         return possibleMoves;
     }
+
     public boolean pawnCanBePromoted(SquareLocation pieceLocation, Map<SquareLocation, SquareStatus> locationStatusMap) {
         Vector moveVector = moveVectors.get(0);
         SquareLocation moveLocation = squareLocationNavigator.applyVectorToSquareLocation(pieceLocation, moveVector);

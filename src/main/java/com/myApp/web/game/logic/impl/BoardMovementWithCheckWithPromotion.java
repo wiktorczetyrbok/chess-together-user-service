@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component("boardMovementWithCheckWithPromotion")
-public class BoardMovementWithCheckWithPromotion extends BoardMovementWithCheckNoPromotion{
+public class BoardMovementWithCheckWithPromotion extends BoardMovementWithCheckNoPromotion {
     @Autowired
     private StatusMapFactory statusMapFactory;
 
@@ -31,10 +31,10 @@ public class BoardMovementWithCheckWithPromotion extends BoardMovementWithCheckN
                 = statusMapFactory.buildStatusMap(board.getActivePlayer(), board.getSquares());
         for (Square square : newBoard.getSquares()) {
             Piece piece = square.getPiece();
-            if (piece!=null && piece.getType().equals("Pawn")) {
+            if (piece != null && piece.getType().equals("Pawn")) {
                 SquareLocation pieceLocation = squareLocationFactory.buildSquareLocation(square);
 
-                PawnMoveCalc pawnMoveCalc= new PawnMoveCalc(piece.getOwner(), piece.isHasMoved());
+                PawnMoveCalc pawnMoveCalc = new PawnMoveCalc(piece.getOwner(), piece.isHasMoved());
                 if (pawnMoveCalc.pawnCanBePromoted(pieceLocation, locationStatusMap)) {
                     square.setPiece(new Piece(piece.getOwner(), "Queen", false));
                 }

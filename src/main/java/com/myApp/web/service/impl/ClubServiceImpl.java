@@ -17,9 +17,10 @@ import static com.myApp.web.mapper.ClubMapper.mapToClubDto;
 
 @Service
 public class ClubServiceImpl implements ClubService {
-    private ClubRepository clubRepository;
-    private UserRepository userRepository;
-    public ClubServiceImpl(ClubRepository clubRepository,UserRepository userRepository) {
+    private final ClubRepository clubRepository;
+    private final UserRepository userRepository;
+
+    public ClubServiceImpl(ClubRepository clubRepository, UserRepository userRepository) {
         this.clubRepository = clubRepository;
         this.userRepository = userRepository;
     }
@@ -38,6 +39,7 @@ public class ClubServiceImpl implements ClubService {
         club.setCreatedBy(user);
         return clubRepository.save(club);
     }
+
     @Override
     public void updateClub(ClubDto clubDto) {
         String username = SecurityUtil.getSessionUser();
@@ -57,6 +59,7 @@ public class ClubServiceImpl implements ClubService {
         List<Club> clubs = clubRepository.searchClubs(query);
         return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
     }
+
     @Override
     public ClubDto findClubById(long clubId) {
         Club club = clubRepository.findById(clubId).get();

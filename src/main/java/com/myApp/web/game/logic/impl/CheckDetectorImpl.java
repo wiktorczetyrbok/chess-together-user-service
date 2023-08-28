@@ -17,6 +17,7 @@ public class CheckDetectorImpl implements CheckDetector {
     private RoyalPieceExtractor royalPieceExtractor;
     @Autowired
     private BoardMovementGenerator boardMovementGenerator;
+
     @Override
     public boolean detectCheck(Board board) {
         String attackingPlayer = toggleActivePlayer(board.getActivePlayer());
@@ -29,12 +30,14 @@ public class CheckDetectorImpl implements CheckDetector {
         }
         return false;
     }
+
     private String toggleActivePlayer(String activePlayer) {
         return ("Black".equals(activePlayer)) ? "White" : "Black";
     }
+
     private boolean moveEndsInASquareWithARoyalPiece(int x, int y, Set<Square> squares) {
         for (Square square : squares) {
-            if (square.getX()==x && square.getY()==y) {
+            if (square.getX() == x && square.getY() == y) {
                 return true;
             }
         }

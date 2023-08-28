@@ -2,7 +2,6 @@ package com.myApp.web.model;
 
 import lombok.*;
 
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "users")
 @Builder
-public class UserEntity
-{
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,15 +26,15 @@ public class UserEntity
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_roles",
-            joinColumns = {@JoinColumn(name="user_id",referencedColumnName = "id")},
-            inverseJoinColumns= {@JoinColumn(name = "role_id",referencedColumnName = "id")}
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private List<RoleEntity> roles = new ArrayList<>();
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
-            name= "user_events",
+            name = "user_events",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name="event_id", referencedColumnName = "id")}
+            inverseJoinColumns = {@JoinColumn(name = "event_id", referencedColumnName = "id")}
     )
-    private List<Event> events= new ArrayList<>();
+    private List<Event> events = new ArrayList<>();
 }

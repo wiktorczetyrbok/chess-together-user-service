@@ -1,6 +1,5 @@
 package com.myApp.web.controller;
 
-import com.myApp.web.dto.ClubDto;
 import com.myApp.web.dto.EventDto;
 import com.myApp.web.dto.UserDto;
 import com.myApp.web.model.Event;
@@ -17,8 +16,8 @@ import java.util.List;
 
 @Controller
 public class EventController {
-    private EventService eventService;
-    private UserService userService;
+    private final EventService eventService;
+    private final UserService userService;
 
     @Autowired
     public EventController(EventService eventService, UserService userService) {
@@ -31,7 +30,7 @@ public class EventController {
         UserEntity user = new UserEntity();
         List<EventDto> events = eventService.findAllEvents();
         String username = SecurityUtil.getSessionUser();
-        if(username != null) {
+        if (username != null) {
             user = userService.findByUsername(username);
             model.addAttribute("user", user);
         }
@@ -39,24 +38,27 @@ public class EventController {
         model.addAttribute("events", events);
         return "events-list";
     }
+
     @GetMapping("/events/search")
-    public String searchEvents(@RequestParam(value = "query") String query, Model model){
+    public String searchEvents(@RequestParam(value = "query") String query, Model model) {
         List<EventDto> events = eventService.searchEvents(query);
         model.addAttribute("events", events);
         return "events-list";
     }
+
     @GetMapping("/events/searchByType")
-    public String searchByType(@RequestParam(value = "type") String type, Model model){
+    public String searchByType(@RequestParam(value = "type") String type, Model model) {
         List<EventDto> events = eventService.searchEventsByType(type);
         model.addAttribute("events", events);
         return "events-list";
     }
+
     @GetMapping("/events/{eventId}")
-    public String viewEvent(@PathVariable("eventId")Long eventId, Model model) {
+    public String viewEvent(@PathVariable("eventId") Long eventId, Model model) {
         UserEntity user = new UserEntity();
         EventDto eventDto = eventService.findByEventId(eventId);
         String username = SecurityUtil.getSessionUser();
-        if(username != null) {
+        if (username != null) {
             user = userService.findByUsername(username);
             model.addAttribute("user", user);
         }
@@ -69,40 +71,45 @@ public class EventController {
         model.addAttribute("assignedUsers", assignedUsers);
         return "events-detail";
     }
+
     @GetMapping("/events/{clubId}/new")
-    public String createEventForm(@PathVariable("clubId") Long clubId, Model model){
+    public String createEventForm(@PathVariable("clubId") Long clubId, Model model) {
         Event event = new Event();
-        model.addAttribute("clubId",clubId);
+        model.addAttribute("clubId", clubId);
         model.addAttribute("event", event);
         return "events-create";
     }
+
     @PostMapping("events/{clubId}")
-    public String createEvent(@PathVariable("clubId")Long clubId, @ModelAttribute("event")EventDto eventDto,
-                              Model model){
+    public String createEvent(@PathVariable("clubId") Long clubId, @ModelAttribute("event") EventDto eventDto,
+                              Model model) {
         eventService.createEvent(clubId, eventDto);
         return "redirect:/clubs/" + clubId;
     }
+
     @GetMapping("/events/{eventId}/assignUser")
     public String assignClubForm(@PathVariable("eventId") Long eventId, Model model) {
         EventDto eventDto = eventService.findByEventId(eventId);
 
         UserEntity user = new UserEntity();
         String username = SecurityUtil.getSessionUser();
-        if(username != null){
+        if (username != null) {
             user = userService.findByUsername(username);
             model.addAttribute("user", user);
         }
-        model.addAttribute("user" , user);
+        model.addAttribute("user", user);
         model.addAttribute("event", eventDto);
         return "event_assign";
     }
+
     @PostMapping("/events/{eventId}/assignUser")
     public String updateUserToEvent(@PathVariable("eventId") Long eventId, @RequestParam("userId") Long userId) {
         eventService.assignUserToEvent(eventId, userId);
         return "redirect:/events/" + eventId;
     }
+
     @GetMapping("/events/{eventId}/delete")
-    public String deleteEvent(@PathVariable("eventId")Long eventId){
+    public String deleteEvent(@PathVariable("eventId") Long eventId) {
         eventService.deleteEvent(eventId);
         return "redirect:/events";
     }

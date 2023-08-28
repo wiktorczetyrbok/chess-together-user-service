@@ -14,9 +14,12 @@
         </div>
         <div class="container">
             <div class="text-center">
-                <form role="form" method="post" th:action="@{/events/{eventId}/assignUser(eventId=${event.id},userId=${user.id})}" th:object="${event}">
+                <form role="form" method="post"
+                      th:action="@{/events/{eventId}/assignUser(eventId=${event.id},userId=${user.id})}"
+                      th:object="${event}">
                     <button type="submit" class="btn btn-primary">Yes, I do</button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='@{/events}'">No, thanks</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='@{/events}'">No, thanks
+                    </button>
                 </form>
             </div>
         </div>

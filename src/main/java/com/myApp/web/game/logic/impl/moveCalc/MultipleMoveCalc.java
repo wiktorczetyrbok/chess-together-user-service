@@ -13,7 +13,8 @@ import java.util.Map;
 
 public abstract class MultipleMoveCalc implements MoveCalc {
     public abstract List<Vector> getVectors();
-    private SquareLocationNavigator squareLocationNavigator = new SquareLocationNavigator();
+
+    private final SquareLocationNavigator squareLocationNavigator = new SquareLocationNavigator();
 
 
     @Override
@@ -25,14 +26,14 @@ public abstract class MultipleMoveCalc implements MoveCalc {
             do {
                 currentLocation = squareLocationNavigator.applyVectorToSquareLocation(currentLocation, vector);
                 status = locationStatusMap.get(currentLocation);
-                if (status==SquareStatus.ENEMY || status==SquareStatus.EMPTY) {
+                if (status == SquareStatus.ENEMY || status == SquareStatus.EMPTY) {
                     Move move = new Move(
                             pieceLocation.getX(), pieceLocation.getY(),
                             currentLocation.getX(), currentLocation.getY()
                     );
                     possibleMoves.add(move);
                 }
-            } while (status==SquareStatus.EMPTY);
+            } while (status == SquareStatus.EMPTY);
         }
         return possibleMoves;
     }

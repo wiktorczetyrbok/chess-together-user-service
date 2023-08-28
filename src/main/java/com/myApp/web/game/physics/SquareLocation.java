@@ -10,9 +10,10 @@ public class SquareLocation {
 
     private int x;
     private int y;
-    public boolean equals(Object o1){
-        if(o1 instanceof SquareLocation squareLocation){
-            return this.x== squareLocation.x && this.y == squareLocation.y;
+
+    public boolean equals(Object o1) {
+        if (o1 instanceof SquareLocation squareLocation) {
+            return this.x == squareLocation.x && this.y == squareLocation.y;
         }
         return false;
     }

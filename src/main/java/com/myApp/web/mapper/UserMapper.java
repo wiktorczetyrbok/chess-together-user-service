@@ -1,12 +1,10 @@
 package com.myApp.web.mapper;
 
-import com.myApp.web.dto.EventDto;
 import com.myApp.web.dto.UserDto;
-import com.myApp.web.model.Event;
 import com.myApp.web.model.UserEntity;
 
 public class UserMapper {
-    public static UserDto mapToUserDto(UserEntity user){
+    public static UserDto mapToUserDto(UserEntity user) {
         return UserDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
@@ -19,7 +17,8 @@ public class UserMapper {
                 .build();
 
     }
-    public static UserEntity mapToUser(UserDto user){
+
+    public static UserEntity mapToUser(UserDto user) {
         return UserEntity.builder()
                 .id(user.getId())
                 .username(user.getUsername())

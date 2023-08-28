@@ -18,6 +18,7 @@ public class DefaultBoardGenerator {
         board.setPromotionPieces(promotionPieces);
         return board;
     }
+
     private List<Square> generateDefaultSquares() {
         List<Square> squares = new ArrayList<>(64);
 
@@ -47,11 +48,12 @@ public class DefaultBoardGenerator {
         }
         return squares;
     }
+
     private List<Move> generateDefaultMoves() {
         //Create a list of legal moves
         List<Move> moves = new ArrayList<>();
         //Pawns can move forward one or two
-        for (int i=1; i<=8; i++) {
+        for (int i = 1; i <= 8; i++) {
             moves.add(new Move(2, i, 3, i));
             moves.add(new Move(2, i, 4, i));
         }

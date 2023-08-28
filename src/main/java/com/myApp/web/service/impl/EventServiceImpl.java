@@ -9,7 +9,6 @@ import com.myApp.web.repository.ClubRepository;
 import com.myApp.web.repository.EventRepository;
 import com.myApp.web.repository.UserRepository;
 import com.myApp.web.service.EventService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -22,9 +21,9 @@ import static com.myApp.web.mapper.UserMapper.mapToUserDto;
 
 @Service
 public class EventServiceImpl implements EventService {
-    private EventRepository eventRepository;
-    private ClubRepository clubRepository;
-    private UserRepository userRepository;
+    private final EventRepository eventRepository;
+    private final ClubRepository clubRepository;
+    private final UserRepository userRepository;
 
     public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
@@ -58,7 +57,7 @@ public class EventServiceImpl implements EventService {
     public void deleteEvent(Long eventId) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
 
-        if ( !event.getAssignedUsers().isEmpty()) {
+        if (!event.getAssignedUsers().isEmpty()) {
             List<UserEntity> users = event.getAssignedUsers();
             for (UserEntity user : users) {
                 user.getEvents().remove(event);
@@ -68,11 +67,13 @@ public class EventServiceImpl implements EventService {
 
         eventRepository.deleteById(eventId);
     }
+
     @Override
     public List<EventDto> searchEvents(String query) {
         List<Event> events = eventRepository.searchEvents(query);
         return events.stream().map(event -> mapToEventDto(event)).collect(Collectors.toList());
     }
+
     @Override
     public List<EventDto> searchEventsByType(String type) {
         List<Event> events = eventRepository.searchEventsByType(type);
@@ -97,6 +98,7 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(event);
         userRepository.save(user);
     }
+
     public List<UserDto> findAssignedUsers(Long eventId) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event not found"));
 

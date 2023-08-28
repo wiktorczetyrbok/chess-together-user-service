@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/chess")
 @RestController
 public class ChessBoardController {
-    public  Board board;
+    public Board board;
     @Autowired
     private BoardMovement boardMovement;
 
     public ChessBoardController(BoardMovement boardMovement) {
         this.boardMovement = boardMovement;
-        this.board =  (new DefaultBoardGenerator()).generateDefaultBoard();
+        this.board = (new DefaultBoardGenerator()).generateDefaultBoard();
     }
 
     @RequestMapping("/game.json")
     public Board getGameState(
-            @RequestParam(value="x1", required=false) String x1,
-            @RequestParam(value="y1", required=false) String y1,
-            @RequestParam(value="x2", required=false) String x2,
-            @RequestParam(value="y2", required=false) String y2) {
+            @RequestParam(value = "x1", required = false) String x1,
+            @RequestParam(value = "y1", required = false) String y1,
+            @RequestParam(value = "x2", required = false) String x2,
+            @RequestParam(value = "y2", required = false) String y2) {
         Move playerMove = generateMove(x1, y1, x2, y2);
-        if (playerMove!=null) {
+        if (playerMove != null) {
             board = boardMovement.makeMoveOnBoard(board, playerMove);
-         //   Move computerMove = chessAi.decideMove(board);
+            //   Move computerMove = chessAi.decideMove(board);
 //            if (computerMove!=null) {
 //                board = boardMovement.makeMoveOnBoard(board, computerMove);
 //            }
@@ -42,7 +42,7 @@ public class ChessBoardController {
     }
 
     private Move generateMove(String x1, String y1, String x2, String y2) {
-        if (x1==null || y1==null || x2==null || y2==null) {
+        if (x1 == null || y1 == null || x2 == null || y2 == null) {
             return null;
         }
         try {

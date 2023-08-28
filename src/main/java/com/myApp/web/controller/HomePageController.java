@@ -12,16 +12,18 @@ import java.io.IOException;
 
 @Controller
 public class HomePageController {
-    private UserService userService;
+    private final UserService userService;
+
     @Autowired
     public HomePageController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping("")
     public String showHomePage(Model model) throws IOException {
         UserEntity user = new UserEntity();
         String username = SecurityUtil.getSessionUser();
-        if(username != null) {
+        if (username != null) {
             user = userService.findByUsername(username);
             model.addAttribute("user", user);
         }

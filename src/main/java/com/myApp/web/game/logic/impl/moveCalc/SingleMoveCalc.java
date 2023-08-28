@@ -13,7 +13,8 @@ import java.util.Map;
 
 public abstract class SingleMoveCalc implements MoveCalc {
     public abstract List<Vector> getVectors();
-    private SquareLocationNavigator squareLocationNavigator = new SquareLocationNavigator();
+
+    private final SquareLocationNavigator squareLocationNavigator = new SquareLocationNavigator();
 
     @Override
     public List<Move> getPossibleMoves(SquareLocation pieceLocation, Map<SquareLocation, SquareStatus> locationStatusMap) {

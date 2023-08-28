@@ -11,7 +11,7 @@ public class MoveCalcFactoryImpl implements MoveCalcFactory {
 
     @Override
     public MoveCalc buildMoveCalculator(Piece piece) {
-        if (piece==null) {
+        if (piece == null) {
             throw new RuntimeException("A null piece was passed to MoveCalculatorFactoryImpl.buildMoveCalculator(piece)");
         }
         String type = piece.getType();

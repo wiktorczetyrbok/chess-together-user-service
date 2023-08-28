@@ -4,7 +4,7 @@ import com.myApp.web.dto.EventDto;
 import com.myApp.web.model.Event;
 
 public class EventMapper {
-    public static Event mapToEvent(EventDto eventDto){
+    public static Event mapToEvent(EventDto eventDto) {
         return Event.builder()
                 .id(eventDto.getId())
                 .name(eventDto.getName())
@@ -19,7 +19,8 @@ public class EventMapper {
                 .build();
 
     }
-    public static EventDto mapToEventDto(Event event){
+
+    public static EventDto mapToEventDto(Event event) {
         return EventDto.builder()
                 .id(event.getId())
                 .name(event.getName())

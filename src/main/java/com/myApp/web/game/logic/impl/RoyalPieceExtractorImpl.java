@@ -16,7 +16,7 @@ public class RoyalPieceExtractorImpl implements RoyalPieceExtractor {
         Set<Square> squaresWithRoyalPieces = new HashSet<>();
         for (Square square : board.getSquares()) {
             Piece piece = square.getPiece();
-            if (piece!=null && piece.getOwner().equals(targetPlayer) && piece.isRoyal()) {
+            if (piece != null && piece.getOwner().equals(targetPlayer) && piece.isRoyal()) {
                 squaresWithRoyalPieces.add(square);
             }
         }

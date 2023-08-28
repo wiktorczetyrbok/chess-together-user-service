@@ -10,9 +10,9 @@ public class BishopMoveCalc extends MultipleMoveCalc {
     @Override
     public List<Vector> getVectors() {
         List<Vector> vectors = new ArrayList<>();
-        vectors.add(new Vector( 1,  1));
-        vectors.add(new Vector(-1,  1));
-        vectors.add(new Vector( 1, -1));
+        vectors.add(new Vector(1, 1));
+        vectors.add(new Vector(-1, 1));
+        vectors.add(new Vector(1, -1));
         vectors.add(new Vector(-1, -1));
         return vectors;
     }

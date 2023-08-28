@@ -14,17 +14,17 @@ import java.util.Map;
 @Component("statusMapFactoryImpl")
 public class StatusMapFactoryImpl implements StatusMapFactory {
     private SquareLocationFactory squareLocationBuilder;
+
     @Override
     public Map<SquareLocation, SquareStatus> buildStatusMap(String activePlayer, List<Square> squareList) {
         Map<SquareLocation, SquareStatus> squareLocationMap = new HashMap<>();
-        for(Square square: squareList){
+        for (Square square : squareList) {
             SquareLocation squareLocation = squareLocationBuilder.buildSquareLocation(square);
-            if (square.getPiece()==null){
-                squareLocationMap.put(squareLocation,SquareStatus.EMPTY);
+            if (square.getPiece() == null) {
+                squareLocationMap.put(squareLocation, SquareStatus.EMPTY);
             } else if (square.getPiece().getOwner().equals(activePlayer)) {
                 squareLocationMap.put(squareLocation, SquareStatus.FRIENDLY);
-            }
-            else {
+            } else {
                 squareLocationMap.put(squareLocation, SquareStatus.ENEMY);
             }
         }
