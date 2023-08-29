@@ -1,7 +1,7 @@
 package com.myApp.web;
 
 import com.myApp.web.controller.LeaderboardController;
-import com.myApp.web.model.ChessComPlayer;
+import com.myApp.web.dto.ChessComPlayerDto;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -50,7 +50,7 @@ public class LeaderboardControllerTest {
         String result = leaderboardController.leaderboard(model);
 
         Mockito.verify(model).addAttribute(Mockito.eq("topPlayers"), Mockito.argThat(argument -> {
-            List<ChessComPlayer> topPlayers = (List<ChessComPlayer>) argument;
+            List<ChessComPlayerDto> topPlayers = (List<ChessComPlayerDto>) argument;
             return topPlayers.size() == 1 &&
                     topPlayers.get(0).getUsername().equals("Magnus Carlsen") &&
                     topPlayers.get(0).getRating().equals("2853") &&
@@ -70,9 +70,9 @@ public class LeaderboardControllerTest {
 
         assertTrue(model.containsAttribute("topPlayers"));
 
-        List<ChessComPlayer> topPlayers = (List<ChessComPlayer>) model.getAttribute("topPlayers");
+        List<ChessComPlayerDto> topPlayers = (List<ChessComPlayerDto>) model.getAttribute("topPlayers");
         assertNotNull(topPlayers);
         assertFalse(topPlayers.isEmpty());
-        assertTrue(topPlayers.stream().allMatch(player -> player instanceof ChessComPlayer));
+        assertTrue(topPlayers.stream().allMatch(player -> player instanceof ChessComPlayerDto));
     }
 }
