@@ -37,8 +37,9 @@ public class ClubControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
     @Test
-    @WithMockUser(username="test", roles="USER") //to fix
+    @WithMockUser(username = "test", roles = "USER") //to fix
     public void createClubTest() {
         UserEntity testUser = userRepository.findByUsername("test");
 
@@ -48,8 +49,7 @@ public class ClubControllerTest {
         club.setContent("Test content");
         club.setCity("Test city");
         club.setCreatedBy(testUser);
-        ClubMapper clubMapper = new ClubMapper();
-        ClubDto clubDto = clubMapper.mapToClubDto(club);
+        ClubDto clubDto = ClubMapper.mapToClubDto(club);
 
         ResponseEntity<Void> response = restTemplate.postForEntity("/clubs", clubDto, Void.class);
 

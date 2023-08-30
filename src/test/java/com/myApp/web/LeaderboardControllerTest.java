@@ -59,6 +59,7 @@ public class LeaderboardControllerTest {
 
         assertEquals("leaderboard", result);
     }
+
     @Test
     public void testLeaderboardLoading() throws IOException {
         Model model = new ExtendedModelMap();
