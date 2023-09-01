@@ -6,14 +6,18 @@ import com.myApp.web.game.Piece;
 import com.myApp.web.game.Square;
 import com.myApp.web.game.logic.BoardMovement;
 import com.myApp.web.game.logic.BoardMovementGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class BoardMovementNoCheckNoPromotion implements BoardMovement {
-    @Autowired
-    private BoardMovementGenerator boardMoveGenerator;
+    public BoardMovementNoCheckNoPromotion(BoardMovementGenerator boardMoveGenerator) {
+        this.boardMoveGenerator = boardMoveGenerator;
+    }
+
+    private final BoardMovementGenerator boardMoveGenerator;
 
     @Override
     public Board makeMoveOnBoard(Board board, Move move) {

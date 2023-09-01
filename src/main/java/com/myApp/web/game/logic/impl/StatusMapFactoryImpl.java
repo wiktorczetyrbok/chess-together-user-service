@@ -13,7 +13,11 @@ import java.util.Map;
 
 @Component("statusMapFactoryImpl")
 public class StatusMapFactoryImpl implements StatusMapFactory {
-    private SquareLocationFactory squareLocationBuilder;
+    private final SquareLocationFactory squareLocationBuilder;
+
+    public StatusMapFactoryImpl(SquareLocationFactory squareLocationBuilder) {
+        this.squareLocationBuilder = squareLocationBuilder;
+    }
 
     @Override
     public Map<SquareLocation, SquareStatus> buildStatusMap(String activePlayer, List<Square> squareList) {

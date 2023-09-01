@@ -6,17 +6,19 @@ import com.myApp.web.game.Square;
 import com.myApp.web.game.logic.BoardMovementGenerator;
 import com.myApp.web.game.logic.CheckDetector;
 import com.myApp.web.game.logic.RoyalPieceExtractor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Set;
 
 public class CheckDetectorImpl implements CheckDetector {
 
-    @Autowired
-    private RoyalPieceExtractor royalPieceExtractor;
-    @Autowired
-    private BoardMovementGenerator boardMovementGenerator;
+    private final RoyalPieceExtractor royalPieceExtractor;
+    private final BoardMovementGenerator boardMovementGenerator;
+
+    public CheckDetectorImpl(RoyalPieceExtractor royalPieceExtractor, BoardMovementGenerator boardMovementGenerator) {
+        this.royalPieceExtractor = royalPieceExtractor;
+        this.boardMovementGenerator = boardMovementGenerator;
+    }
 
     @Override
     public boolean detectCheck(Board board) {

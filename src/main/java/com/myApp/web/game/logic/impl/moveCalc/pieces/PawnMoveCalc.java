@@ -15,7 +15,6 @@ public class PawnMoveCalc implements MoveCalc {
     private final List<Vector> moveVectors;
     private final List<Vector> captureVectors;
 
-    private final SquareLocationNavigator squareLocationNavigator = new SquareLocationNavigator();
 
     public PawnMoveCalc(String owner, boolean hasMoved) {
         moveVectors = new ArrayList<>();
@@ -41,7 +40,7 @@ public class PawnMoveCalc implements MoveCalc {
     public List<Move> getPossibleMoves(SquareLocation pieceLocation, Map<SquareLocation, SquareStatus> locationStatusMap) {
         List<Move> possibleMoves = new ArrayList<>();
         for (Vector moveVector : moveVectors) {
-            SquareLocation moveLocation = squareLocationNavigator.applyVectorToSquareLocation(pieceLocation, moveVector);
+            SquareLocation moveLocation = SquareLocationNavigator.applyVectorToSquareLocation(pieceLocation, moveVector);
             SquareStatus status = locationStatusMap.get(moveLocation);
             if (status == SquareStatus.EMPTY) {
                 Move move = new Move(pieceLocation.getX(), pieceLocation.getY(), moveLocation.getX(), moveLocation.getY());
@@ -51,7 +50,7 @@ public class PawnMoveCalc implements MoveCalc {
             }
         }
         for (Vector captureVector : captureVectors) {
-            SquareLocation captureLocation = squareLocationNavigator.applyVectorToSquareLocation(pieceLocation, captureVector);
+            SquareLocation captureLocation = SquareLocationNavigator.applyVectorToSquareLocation(pieceLocation, captureVector);
             SquareStatus status = locationStatusMap.get(captureLocation);
             if (status == SquareStatus.ENEMY) {
                 Move move = new Move(pieceLocation.getX(), pieceLocation.getY(), captureLocation.getX(), captureLocation.getY());
@@ -63,7 +62,7 @@ public class PawnMoveCalc implements MoveCalc {
 
     public boolean pawnCanBePromoted(SquareLocation pieceLocation, Map<SquareLocation, SquareStatus> locationStatusMap) {
         Vector moveVector = moveVectors.get(0);
-        SquareLocation moveLocation = squareLocationNavigator.applyVectorToSquareLocation(pieceLocation, moveVector);
+        SquareLocation moveLocation = SquareLocationNavigator.applyVectorToSquareLocation(pieceLocation, moveVector);
         return !locationStatusMap.containsKey(moveLocation);
     }
 }

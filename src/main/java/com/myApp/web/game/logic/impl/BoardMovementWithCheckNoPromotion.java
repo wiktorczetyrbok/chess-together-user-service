@@ -5,15 +5,16 @@ import com.myApp.web.game.Move;
 import com.myApp.web.game.Piece;
 import com.myApp.web.game.Square;
 import com.myApp.web.game.logic.BoardMovementGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class BoardMovementWithCheckNoPromotion extends BoardMovementNoCheckNoPromotion {
-    @Autowired
-    private BoardMovementGenerator boardMoveGenerator;
+
+    public BoardMovementWithCheckNoPromotion(BoardMovementGenerator boardMoveGenerator) {
+        super(boardMoveGenerator);
+    }
 
     @Override
     public Board makeMoveOnBoard(Board board, Move move) {
@@ -38,7 +39,7 @@ public class BoardMovementWithCheckNoPromotion extends BoardMovementNoCheckNoPro
         Board newBoard = new Board();
         newBoard.setActivePlayer(toggleActivePlayer(board.getActivePlayer()));
         newBoard.setSquares(squares);
-        List<Move> potentialMoves = boardMoveGenerator.generatePossibleMoves(newBoard.getActivePlayer(), newBoard.getSquares());
+        List<Move> potentialMoves = getBoardMoveGenerator().generatePossibleMoves(newBoard.getActivePlayer(), newBoard.getSquares());
         newBoard.setMoves(potentialMoves);
         List<String> promotionPieces = new ArrayList<>();
         promotionPieces.addAll(board.getPromotionPieces());

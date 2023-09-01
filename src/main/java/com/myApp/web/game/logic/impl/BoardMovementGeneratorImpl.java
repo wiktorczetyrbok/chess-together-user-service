@@ -6,7 +6,6 @@ import com.myApp.web.game.Square;
 import com.myApp.web.game.logic.*;
 import com.myApp.web.game.physics.SquareLocation;
 import com.myApp.web.game.physics.SquareStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,14 +14,20 @@ import java.util.Map;
 
 @Component("boardMoveGeneratorImpl")
 public class BoardMovementGeneratorImpl implements BoardMovementGenerator {
-    @Autowired
-    private StatusMapFactory statusMapFactory;
-    @Autowired
-    private ActivePieceExtractor activePieceExtractor;
-    @Autowired
-    private SquareLocationFactory squareLocationFactory;
-    @Autowired
-    private MoveCalcFactory moveCalculatorFactory;
+    private final StatusMapFactory statusMapFactory;
+    private final ActivePieceExtractor activePieceExtractor;
+    private final SquareLocationFactory squareLocationFactory;
+    private final MoveCalcFactory moveCalculatorFactory;
+
+    public BoardMovementGeneratorImpl(StatusMapFactory statusMapFactory,
+                                      ActivePieceExtractor activePieceExtractor,
+                                      SquareLocationFactory squareLocationFactory,
+                                      MoveCalcFactory moveCalculatorFactory) {
+        this.statusMapFactory = statusMapFactory;
+        this.activePieceExtractor = activePieceExtractor;
+        this.squareLocationFactory = squareLocationFactory;
+        this.moveCalculatorFactory = moveCalculatorFactory;
+    }
 
     @Override
     public List<Move> generatePossibleMoves(String activePlayer, List<Square> squares) {

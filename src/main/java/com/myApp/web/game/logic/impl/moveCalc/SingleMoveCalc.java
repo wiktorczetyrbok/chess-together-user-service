@@ -14,13 +14,11 @@ import java.util.Map;
 public abstract class SingleMoveCalc implements MoveCalc {
     public abstract List<Vector> getVectors();
 
-    private final SquareLocationNavigator squareLocationNavigator = new SquareLocationNavigator();
-
     @Override
     public List<Move> getPossibleMoves(SquareLocation pieceLocation, Map<SquareLocation, SquareStatus> locationStatusMap) {
         List<Move> possibleMoves = new ArrayList<>();
         for (Vector vector : getVectors()) {
-            SquareLocation moveLocation = squareLocationNavigator.applyVectorToSquareLocation(pieceLocation, vector);
+            SquareLocation moveLocation = SquareLocationNavigator.applyVectorToSquareLocation(pieceLocation, vector);
             SquareStatus status = locationStatusMap.get(moveLocation);
             if (status == SquareStatus.ENEMY || status == SquareStatus.EMPTY) {
                 Move move = new Move(

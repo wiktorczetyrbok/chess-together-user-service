@@ -84,13 +84,12 @@ public class EventServiceImpl implements EventService {
     public void assignUserToEvent(Long eventId, Long userId) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
-        List<UserEntity> assignedUsers;
-        assignedUsers = event.getAssignedUsers();
+
+        List<UserEntity> assignedUsers = event.getAssignedUsers();
         assignedUsers.add(userRepository.findById(userId).get());
         event.setAssignedUsers(assignedUsers);
 
-        List<Event> assignedEvents;
-        assignedEvents = user.getEvents();
+        List<Event> assignedEvents = user.getEvents();
         assignedEvents.add(event);
 
         user.setEvents(assignedEvents);

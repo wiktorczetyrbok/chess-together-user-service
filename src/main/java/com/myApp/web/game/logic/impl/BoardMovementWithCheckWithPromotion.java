@@ -4,23 +4,28 @@ import com.myApp.web.game.Board;
 import com.myApp.web.game.Move;
 import com.myApp.web.game.Piece;
 import com.myApp.web.game.Square;
+import com.myApp.web.game.logic.BoardMovementGenerator;
 import com.myApp.web.game.logic.SquareLocationFactory;
 import com.myApp.web.game.logic.StatusMapFactory;
 import com.myApp.web.game.logic.impl.moveCalc.pieces.PawnMoveCalc;
 import com.myApp.web.game.physics.SquareLocation;
 import com.myApp.web.game.physics.SquareStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 @Component("boardMovementWithCheckWithPromotion")
 public class BoardMovementWithCheckWithPromotion extends BoardMovementWithCheckNoPromotion {
-    @Autowired
-    private StatusMapFactory statusMapFactory;
+    private final StatusMapFactory statusMapFactory;
+    private final SquareLocationFactory squareLocationFactory;
 
-    @Autowired
-    private SquareLocationFactory squareLocationFactory;
+    public BoardMovementWithCheckWithPromotion(BoardMovementGenerator boardMovementGenerator,
+                                               StatusMapFactory statusMapFactory,
+                                               SquareLocationFactory squareLocationFactory) {
+        super(boardMovementGenerator);
+        this.statusMapFactory = statusMapFactory;
+        this.squareLocationFactory = squareLocationFactory;
+    }
 
     @Override
     public Board makeMoveOnBoard(Board board, Move move) {
