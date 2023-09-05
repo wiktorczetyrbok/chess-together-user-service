@@ -2,6 +2,7 @@ package com.myApp.web;
 
 import com.myApp.web.controller.LeaderboardController;
 import com.myApp.web.dto.ChessComPlayerDto;
+import com.myApp.web.service.LeaderboardScrapingService;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -24,6 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class LeaderboardControllerTest {
     @Mock
     private Model model;
+
+    @Mock
+    private LeaderboardScrapingService leaderboardScrapingService;
 
     @InjectMocks
     private LeaderboardController leaderboardController;
@@ -63,7 +67,7 @@ public class LeaderboardControllerTest {
     @Test
     public void testLeaderboardLoading() throws IOException {
         Model model = new ExtendedModelMap();
-        LeaderboardController controller = new LeaderboardController();
+        LeaderboardController controller = new LeaderboardController(leaderboardScrapingService);
 
         String viewName = controller.leaderboard(model);
 
