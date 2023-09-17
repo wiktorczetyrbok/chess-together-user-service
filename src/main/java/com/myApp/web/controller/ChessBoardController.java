@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChessBoardController {
     public Board board;
     @Autowired
-    private BoardMovement boardMovement;
+    private final BoardMovement boardMovement;
 
     public ChessBoardController(BoardMovement boardMovement) {
         this.boardMovement = boardMovement;
@@ -30,10 +30,6 @@ public class ChessBoardController {
         Move playerMove = generateMove(x1, y1, x2, y2);
         if (playerMove != null) {
             board = boardMovement.makeMoveOnBoard(board, playerMove);
-            //   Move computerMove = chessAi.decideMove(board);
-//            if (computerMove!=null) {
-//                board = boardMovement.makeMoveOnBoard(board, computerMove);
-//            }
 
         } else {
             board = (new DefaultBoardGenerator()).generateDefaultBoard();
