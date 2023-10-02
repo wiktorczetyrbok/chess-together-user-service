@@ -1,5 +1,7 @@
 package com.myApp.web.game;
 
+import com.myApp.web.game.utils.Player;
+import com.myApp.web.game.utils.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,12 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Piece {
-    private String owner;
-    private String type;
+    private Player owner;
+    private Type type;
     private boolean royal;
-    private boolean hasMoved = false;
-
-    //constructor for promotion
-    public Piece(String owner, String type, boolean b) {
-    }
+    private boolean hasMoved;
 }
