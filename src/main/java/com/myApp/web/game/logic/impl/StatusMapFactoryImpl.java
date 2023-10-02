@@ -5,6 +5,7 @@ import com.myApp.web.game.logic.SquareLocationFactory;
 import com.myApp.web.game.logic.StatusMapFactory;
 import com.myApp.web.game.physics.SquareLocation;
 import com.myApp.web.game.physics.SquareStatus;
+import com.myApp.web.game.utils.Player;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public class StatusMapFactoryImpl implements StatusMapFactory {
     }
 
     @Override
-    public Map<SquareLocation, SquareStatus> buildStatusMap(String activePlayer, List<Square> squareList) {
+    public Map<SquareLocation, SquareStatus> buildStatusMap(Player activePlayer, List<Square> squareList) {
         Map<SquareLocation, SquareStatus> squareLocationMap = new HashMap<>();
         for (Square square : squareList) {
             SquareLocation squareLocation = squareLocationBuilder.buildSquareLocation(square);

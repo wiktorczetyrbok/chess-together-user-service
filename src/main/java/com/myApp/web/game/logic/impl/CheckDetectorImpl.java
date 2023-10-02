@@ -6,6 +6,7 @@ import com.myApp.web.game.Square;
 import com.myApp.web.game.logic.BoardMovementGenerator;
 import com.myApp.web.game.logic.CheckDetector;
 import com.myApp.web.game.logic.RoyalPieceExtractor;
+import com.myApp.web.game.utils.Player;
 
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class CheckDetectorImpl implements CheckDetector {
 
     @Override
     public boolean detectCheck(Board board) {
-        String attackingPlayer = toggleActivePlayer(board.getActivePlayer());
+        Player attackingPlayer = toggleActivePlayer(board.getActivePlayer());
         Set<Square> squares = royalPieceExtractor.extractRoyalPieces(board, board.getActivePlayer());
         List<Move> moves = boardMovementGenerator.generatePossibleMoves(attackingPlayer, board.getSquares());
         for (Move move : moves) {
@@ -33,8 +34,8 @@ public class CheckDetectorImpl implements CheckDetector {
         return false;
     }
 
-    private String toggleActivePlayer(String activePlayer) {
-        return ("Black".equals(activePlayer)) ? "White" : "Black";
+    private Player toggleActivePlayer(Player activePlayer) {
+        return (activePlayer.equals(Player.BLACK)) ? Player.WHITE : Player.BLACK;
     }
 
     private boolean moveEndsInASquareWithARoyalPiece(int x, int y, Set<Square> squares) {

@@ -6,6 +6,7 @@ import com.myApp.web.game.physics.SquareLocation;
 import com.myApp.web.game.physics.SquareLocationNavigator;
 import com.myApp.web.game.physics.SquareStatus;
 import com.myApp.web.game.physics.Vector;
+import com.myApp.web.game.utils.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,10 @@ public class PawnMoveCalc implements MoveCalc {
     private final List<Vector> captureVectors;
 
 
-    public PawnMoveCalc(String owner, boolean hasMoved) {
+    public PawnMoveCalc(Player owner, boolean hasMoved) {
         moveVectors = new ArrayList<>();
         captureVectors = new ArrayList<>();
-        if (owner.contentEquals("White")) {
+        if (owner.equals(Player.WHITE)) {
             moveVectors.add(new Vector(1, 0));
             if (!hasMoved) {
                 moveVectors.add(new Vector(2, 0));

@@ -1,36 +1,46 @@
 package com.myApp.web.game;
 
+import com.myApp.web.game.utils.Player;
+import com.myApp.web.game.utils.Type;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.myApp.web.game.utils.Type.*;
+
 public class DefaultBoardGenerator {
-    public Board generateDefaultBoard() {
+    private static final int BOARD_SIZE = 8;
+    private static final int ALL_SQUARES_COUNT = 64;
+    public static Board generateDefaultBoard() {
         List<Square> squares = generateDefaultSquares();
-        //Create a list of legal first moves
+
         List<Move> moves = generateDefaultMoves();
         //Create a list of pieces that can be attained when
         //a pawn reaches the back row
-        List<String> promotionPieces = generatePromotionPieces();
+        List<Type> promotionPieces = generatePromotionPieces();
         Board board = new Board();
-        board.setActivePlayer("White");
+        System.out.println(generateDefaultSquares());
+        board.setActivePlayer(Player.WHITE);
         board.setSquares(squares);
         board.setMoves(moves);
         board.setPromotionPieces(promotionPieces);
         return board;
     }
 
-    private List<Square> generateDefaultSquares() {
-        List<Square> squares = new ArrayList<>(64);
+    private static List<Square> generateDefaultSquares() {
+        List<Square> squares = new ArrayList<>(ALL_SQUARES_COUNT);
 
-        String[] backRowPieces = {"Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook"};
-        String[] frontRowPieces = {"Pawn", "Pawn", "Pawn", "Pawn", "Pawn", "Pawn", "Pawn", "Pawn"};
+        Type[] backRowPieces = {ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK};
+        Type frontRowPieces = PAWN;
         // Create the back row of White
-        for (int i = 0; i < backRowPieces.length; i++) {
-            squares.add(new Square(1, i + 1, new Piece("White", backRowPieces[i], false)));
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            Piece piece = new Piece(Player.WHITE, backRowPieces[i], false, false);
+            squares.add(new Square(1, i + 1, piece));
         }
         // Create the front row of White (all pawns)
-        for (int i = 0; i < frontRowPieces.length; i++) {
-            squares.add(new Square(2, i + 1, new Piece("White", frontRowPieces[i], false)));
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            Piece piece = new Piece(Player.WHITE, frontRowPieces, false, false);
+            squares.add(new Square(2, i + 1, piece));
         }
         // Create the empty squares in the middle of the board
         for (int i = 3; i <= 6; i++) {
@@ -39,17 +49,19 @@ public class DefaultBoardGenerator {
             }
         }
         // Create the front row of Black (all pawns)
-        for (int i = 0; i < frontRowPieces.length; i++) {
-            squares.add(new Square(7, i + 1, new Piece("Black", frontRowPieces[i], false)));
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            Piece piece = new Piece(Player.BLACK, frontRowPieces, false, false);
+            squares.add(new Square(7, i + 1, piece));
         }
         // Create the back row of Black
-        for (int i = 0; i < backRowPieces.length; i++) {
-            squares.add(new Square(8, i + 1, new Piece("Black", backRowPieces[i], false)));
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            Piece piece = new Piece(Player.BLACK, backRowPieces[i], false, false);
+            squares.add(new Square(8, i + 1, piece));
         }
         return squares;
     }
 
-    private List<Move> generateDefaultMoves() {
+    private static List<Move> generateDefaultMoves() {
         //Create a list of legal moves
         List<Move> moves = new ArrayList<>();
         //Pawns can move forward one or two
@@ -67,13 +79,13 @@ public class DefaultBoardGenerator {
         return moves;
     }
 
-    private List<String> generatePromotionPieces() {
+    private static List<Type> generatePromotionPieces() {
         //A pawn can be promoted to a Rook, Knight, Bishop, or Queen
-        List<String> promotionPieces = new ArrayList<>();
-        promotionPieces.add("Rook");
-        promotionPieces.add("Knight");
-        promotionPieces.add("Bishop");
-        promotionPieces.add("Queen");
+        List<Type> promotionPieces = new ArrayList<>();
+        promotionPieces.add(ROOK);
+        promotionPieces.add(KNIGHT);
+        promotionPieces.add(BISHOP);
+        promotionPieces.add(QUEEN);
         return promotionPieces;
     }
 }

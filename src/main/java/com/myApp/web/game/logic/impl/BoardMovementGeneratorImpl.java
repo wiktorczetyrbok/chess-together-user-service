@@ -6,6 +6,7 @@ import com.myApp.web.game.Square;
 import com.myApp.web.game.logic.*;
 import com.myApp.web.game.physics.SquareLocation;
 import com.myApp.web.game.physics.SquareStatus;
+import com.myApp.web.game.utils.Player;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class BoardMovementGeneratorImpl implements BoardMovementGenerator {
     }
 
     @Override
-    public List<Move> generatePossibleMoves(String activePlayer, List<Square> squares) {
+    public List<Move> generatePossibleMoves(Player activePlayer, List<Square> squares) {
         Map<SquareLocation, SquareStatus> locationStatusMap = statusMapFactory.buildStatusMap(activePlayer, squares);
         List<Move> moves = new ArrayList<>();
         List<Square> squaresWithActivePieces = activePieceExtractor.extractSquaresWithActivePieces(activePlayer, squares);

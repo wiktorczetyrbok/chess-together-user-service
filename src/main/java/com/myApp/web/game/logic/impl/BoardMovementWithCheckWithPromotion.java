@@ -10,6 +10,7 @@ import com.myApp.web.game.logic.StatusMapFactory;
 import com.myApp.web.game.logic.impl.moveCalc.pieces.PawnMoveCalc;
 import com.myApp.web.game.physics.SquareLocation;
 import com.myApp.web.game.physics.SquareStatus;
+import com.myApp.web.game.utils.Type;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -41,7 +42,7 @@ public class BoardMovementWithCheckWithPromotion extends BoardMovementWithCheckN
 
                 PawnMoveCalc pawnMoveCalc = new PawnMoveCalc(piece.getOwner(), piece.isHasMoved());
                 if (pawnMoveCalc.pawnCanBePromoted(pieceLocation, locationStatusMap)) {
-                    square.setPiece(new Piece(piece.getOwner(), "Queen", false));
+                    square.setPiece(new Piece(piece.getOwner(), Type.QUEEN, false, piece.isHasMoved()));
                 }
             }
         }

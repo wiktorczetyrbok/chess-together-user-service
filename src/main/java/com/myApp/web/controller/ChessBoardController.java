@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChessBoardController {
     public Board board;
-    @Autowired
     private final BoardMovement boardMovement;
 
     public ChessBoardController(BoardMovement boardMovement) {
         this.boardMovement = boardMovement;
-        this.board = (new DefaultBoardGenerator()).generateDefaultBoard();
     }
 
     @RequestMapping("/game.json")
@@ -32,7 +30,8 @@ public class ChessBoardController {
             board = boardMovement.makeMoveOnBoard(board, playerMove);
 
         } else {
-            board = (new DefaultBoardGenerator()).generateDefaultBoard();
+            board = DefaultBoardGenerator.generateDefaultBoard();
+            System.out.println(DefaultBoardGenerator.generateDefaultBoard());
         }
         return board;
     }

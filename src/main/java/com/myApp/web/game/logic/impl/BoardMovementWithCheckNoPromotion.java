@@ -5,6 +5,8 @@ import com.myApp.web.game.Move;
 import com.myApp.web.game.Piece;
 import com.myApp.web.game.Square;
 import com.myApp.web.game.logic.BoardMovementGenerator;
+import com.myApp.web.game.utils.Player;
+import com.myApp.web.game.utils.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +43,14 @@ public class BoardMovementWithCheckNoPromotion extends BoardMovementNoCheckNoPro
         newBoard.setSquares(squares);
         List<Move> potentialMoves = getBoardMoveGenerator().generatePossibleMoves(newBoard.getActivePlayer(), newBoard.getSquares());
         newBoard.setMoves(potentialMoves);
-        List<String> promotionPieces = new ArrayList<>();
+        List<Type> promotionPieces = new ArrayList<>();
         promotionPieces.addAll(board.getPromotionPieces());
         newBoard.setPromotionPieces(promotionPieces);
         return newBoard;
     }
 
-    private String toggleActivePlayer(String activePlayer) {
-        return ("Black".equals(activePlayer)) ? "White" : "Black";
+    private Player toggleActivePlayer(Player activePlayer) {
+        return (activePlayer.equals(Player.BLACK)) ? Player.WHITE : Player.BLACK;
     }
 
     private Piece getPieceToBeMoved(Board board, Move move) {
@@ -64,8 +66,7 @@ public class BoardMovementWithCheckNoPromotion extends BoardMovementNoCheckNoPro
         if (piece == null) {
             return null;
         }
-        Piece newPiece = new Piece(piece.getOwner(), piece.getType(), piece.isRoyal());
-        newPiece.setHasMoved(piece.isHasMoved());
+        Piece newPiece = new Piece(piece.getOwner(), piece.getType(), piece.isRoyal(),piece.isHasMoved());
 
         return newPiece;
     }
