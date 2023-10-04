@@ -19,7 +19,7 @@ public class ChessBoardController {
         this.boardMovement = boardMovement;
     }
 
-    @RequestMapping("/game.json")
+    @RequestMapping("/game")
     public Board getGameState(
             @RequestParam(value = "x1", required = false) String x1,
             @RequestParam(value = "y1", required = false) String y1,
@@ -31,7 +31,6 @@ public class ChessBoardController {
 
         } else {
             board = DefaultBoardGenerator.generateDefaultBoard();
-            System.out.println(DefaultBoardGenerator.generateDefaultBoard());
         }
         return board;
     }
