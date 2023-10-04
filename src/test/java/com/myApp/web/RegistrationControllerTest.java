@@ -54,7 +54,6 @@ public class RegistrationControllerTest {
         user.setPassword("testpassword2");
 
         ResponseEntity<String> response = restTemplate.postForEntity("/register/save", user, String.class);
-        System.out.println(response);
         assertTrue(response.getHeaders().getLocation().toString().endsWith("/register?fail"));
 
 

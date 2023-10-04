@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
 import java.util.List;
+
 @Controller
 public class LeaderboardController {
     private final LeaderboardScrapingService scrapingService;

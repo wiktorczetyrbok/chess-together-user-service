@@ -69,7 +69,7 @@ public class BoardMovementNoCheckNoPromotion implements BoardMovement {
         if (piece == null) {
             return null;
         }
-        Piece newPiece = new Piece(piece.getOwner(), piece.getType(), piece.isRoyal(),piece.isHasMoved());
+        Piece newPiece = new Piece(piece.getOwner(), piece.getType(), piece.isRoyal(), piece.isHasMoved());
 
         return newPiece;
     }

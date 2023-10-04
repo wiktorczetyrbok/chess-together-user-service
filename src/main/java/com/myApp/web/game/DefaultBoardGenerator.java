@@ -11,6 +11,7 @@ import static com.myApp.web.game.utils.Type.*;
 public class DefaultBoardGenerator {
     private static final int BOARD_SIZE = 8;
     private static final int ALL_SQUARES_COUNT = 64;
+
     public static Board generateDefaultBoard() {
         List<Square> squares = generateDefaultSquares();
 
@@ -18,8 +19,8 @@ public class DefaultBoardGenerator {
         //Create a list of pieces that can be attained when
         //a pawn reaches the back row
         List<Type> promotionPieces = generatePromotionPieces();
+
         Board board = new Board();
-        System.out.println(generateDefaultSquares());
         board.setActivePlayer(Player.WHITE);
         board.setSquares(squares);
         board.setMoves(moves);
@@ -75,7 +76,6 @@ public class DefaultBoardGenerator {
         //The right knight can move forward left and right
         moves.add(new Move(1, 7, 3, 6));
         moves.add(new Move(1, 7, 3, 8));
-        //Return a list of the legal moves
         return moves;
     }
 
