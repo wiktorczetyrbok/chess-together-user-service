@@ -13,6 +13,8 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.myApp.web.game.utils.PlayerUtils.toggleActivePlayer;
+
 @Getter
 public class BoardMovementNoCheckNoPromotion implements BoardMovement {
     public BoardMovementNoCheckNoPromotion(BoardMovementGenerator boardMoveGenerator) {
@@ -59,10 +61,6 @@ public class BoardMovementNoCheckNoPromotion implements BoardMovement {
             }
         }
         return null;
-    }
-
-    private Player toggleActivePlayer(Player activePlayer) {
-        return (activePlayer.equals(Player.BLACK)) ? Player.WHITE : Player.BLACK;
     }
 
     private Piece clonePiece(Piece piece) {

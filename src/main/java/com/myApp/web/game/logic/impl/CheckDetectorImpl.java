@@ -11,6 +11,8 @@ import com.myApp.web.game.utils.Player;
 import java.util.List;
 import java.util.Set;
 
+import static com.myApp.web.game.utils.PlayerUtils.toggleActivePlayer;
+
 public class CheckDetectorImpl implements CheckDetector {
 
     private final RoyalPieceExtractor royalPieceExtractor;
@@ -34,9 +36,7 @@ public class CheckDetectorImpl implements CheckDetector {
         return false;
     }
 
-    private Player toggleActivePlayer(Player activePlayer) {
-        return (activePlayer.equals(Player.BLACK)) ? Player.WHITE : Player.BLACK;
-    }
+
 
     private boolean moveEndsInASquareWithARoyalPiece(int x, int y, Set<Square> squares) {
         for (Square square : squares) {

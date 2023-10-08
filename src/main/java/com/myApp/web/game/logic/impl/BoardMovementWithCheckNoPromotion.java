@@ -6,6 +6,7 @@ import com.myApp.web.game.Piece;
 import com.myApp.web.game.Square;
 import com.myApp.web.game.logic.BoardMovementGenerator;
 import com.myApp.web.game.utils.Player;
+import com.myApp.web.game.utils.PlayerUtils;
 import com.myApp.web.game.utils.Type;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class BoardMovementWithCheckNoPromotion extends BoardMovementNoCheckNoPro
             squares.add(squareClone);
         }
         Board newBoard = new Board();
-        newBoard.setActivePlayer(toggleActivePlayer(board.getActivePlayer()));
+        newBoard.setActivePlayer(PlayerUtils.toggleActivePlayer(board.getActivePlayer()));
         newBoard.setSquares(squares);
         List<Move> potentialMoves = getBoardMoveGenerator().generatePossibleMoves(newBoard.getActivePlayer(), newBoard.getSquares());
         newBoard.setMoves(potentialMoves);
@@ -47,10 +48,6 @@ public class BoardMovementWithCheckNoPromotion extends BoardMovementNoCheckNoPro
         promotionPieces.addAll(board.getPromotionPieces());
         newBoard.setPromotionPieces(promotionPieces);
         return newBoard;
-    }
-
-    private Player toggleActivePlayer(Player activePlayer) {
-        return (activePlayer.equals(Player.BLACK)) ? Player.WHITE : Player.BLACK;
     }
 
     private Piece getPieceToBeMoved(Board board, Move move) {
