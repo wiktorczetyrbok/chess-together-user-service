@@ -47,27 +47,8 @@ public class BoardMovementNoCheckNoPromotion implements BoardMovement {
         newBoard.setSquares(squares);
         List<Move> potentialMoves = boardMoveGenerator.generatePossibleMoves(newBoard.getActivePlayer(), newBoard.getSquares());
         newBoard.setMoves(potentialMoves);
-        List<Type> promotionPieces = new ArrayList<>();
-        promotionPieces.addAll(board.getPromotionPieces());
+        List<Type> promotionPieces = new ArrayList<>(board.getPromotionPieces());
         newBoard.setPromotionPieces(promotionPieces);
         return newBoard;
-    }
-
-    private Piece getPieceToBeMoved(Board board, Move move) {
-        for (Square square : board.getSquares()) {
-            if (move.getX1() == square.getX() && move.getY1() == square.getY()) {
-                return square.getPiece();
-            }
-        }
-        return null;
-    }
-
-    private Piece clonePiece(Piece piece) {
-        if (piece == null) {
-            return null;
-        }
-        Piece newPiece = new Piece(piece.getOwner(), piece.getType(), piece.isRoyal(), piece.isHasMoved());
-
-        return newPiece;
     }
 }

@@ -2,68 +2,51 @@ package com.myApp.web.game.logic.movement.impl;
 
 import com.myApp.web.game.Board;
 import com.myApp.web.game.Move;
-import com.myApp.web.game.Piece;
-import com.myApp.web.game.Square;
+import com.myApp.web.game.logic.check.CheckDetector;
 import com.myApp.web.game.logic.movement.BoardMovementGenerator;
-import com.myApp.web.game.utils.PlayerUtils;
-import com.myApp.web.game.utils.Type;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.myApp.web.game.utils.PlayerUtils.toggleActivePlayer;
+
 
 public class BoardMovementWithCheckNoPromotion extends BoardMovementNoCheckNoPromotion {
+    private final CheckDetector checkDetector;
 
-    public BoardMovementWithCheckNoPromotion(BoardMovementGenerator boardMoveGenerator) {
+    public BoardMovementWithCheckNoPromotion(BoardMovementGenerator boardMoveGenerator, CheckDetector checkDetector) {
         super(boardMoveGenerator);
+        this.checkDetector = checkDetector;
     }
-
     @Override
     public Board makeMoveOnBoard(Board board, Move move) {
-        Piece pieceToBeMoved = getPieceToBeMoved(board, move);
-        List<Square> squares = new ArrayList<>();
-        for (Square square : board.getSquares()) {
-            Square squareClone = new Square();
-            squareClone.setX(square.getX());
-            squareClone.setY(square.getY());
-            if (move.getX1() == square.getX() && move.getY1() == square.getY()) {
-                squareClone.setPiece(null);
-            } else if (move.getX2() == square.getX() && move.getY2() == square.getY()) {
-                squareClone.setPiece(clonePiece(pieceToBeMoved));
-                if (squareClone.getPiece() != null) {
-                    squareClone.getPiece().setHasMoved(true);
-                }
+        Board newBoard = super.makeMoveOnBoard(board, move);
+        boolean inCheck = checkDetector.detectCheck(newBoard);
+
+        newBoard.setMoves(pruneMovesForCheck(newBoard));
+        if (newBoard.getMoves().isEmpty()) {
+            if (inCheck) {
+                newBoard.setStatus("Checkmate");
             } else {
-                squareClone.setPiece(clonePiece(square.getPiece()));
+                newBoard.setStatus("Stalemate");
             }
-            squares.add(squareClone);
+        } else if (inCheck) {
+            newBoard.setStatus("In check!");
         }
-        Board newBoard = new Board();
-        newBoard.setActivePlayer(PlayerUtils.toggleActivePlayer(board.getActivePlayer()));
-        newBoard.setSquares(squares);
-        List<Move> potentialMoves = getBoardMoveGenerator().generatePossibleMoves(newBoard.getActivePlayer(), newBoard.getSquares());
-        newBoard.setMoves(potentialMoves);
-        List<Type> promotionPieces = new ArrayList<>();
-        promotionPieces.addAll(board.getPromotionPieces());
-        newBoard.setPromotionPieces(promotionPieces);
         return newBoard;
     }
 
-    private Piece getPieceToBeMoved(Board board, Move move) {
-        for (Square square : board.getSquares()) {
-            if (move.getX1() == square.getX() && move.getY1() == square.getY()) {
-                return square.getPiece();
+    private List<Move> pruneMovesForCheck(Board board) {
+        List<Move> legalMoves = new ArrayList<>();
+        for (Move move : board.getMoves()) {
+            Board boardAfterMove = super.makeMoveOnBoard(board, move);
+
+            boardAfterMove.setActivePlayer(toggleActivePlayer(boardAfterMove.getActivePlayer()));
+            boolean inCheck = checkDetector.detectCheck(boardAfterMove);
+            if (!inCheck) {
+                legalMoves.add(move);
             }
         }
-        return null;
-    }
-
-    private Piece clonePiece(Piece piece) {
-        if (piece == null) {
-            return null;
-        }
-        Piece newPiece = new Piece(piece.getOwner(), piece.getType(), piece.isRoyal(), piece.isHasMoved());
-
-        return newPiece;
+        return legalMoves;
     }
 }
