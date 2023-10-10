@@ -4,6 +4,7 @@ import com.myApp.web.game.Board;
 import com.myApp.web.game.Move;
 import com.myApp.web.game.logic.check.CheckDetector;
 import com.myApp.web.game.logic.movement.BoardMovementGenerator;
+import com.myApp.web.game.utils.BoardStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,12 @@ public class BoardMovementWithCheckNoPromotion extends BoardMovementNoCheckNoPro
         newBoard.setMoves(pruneMovesForCheck(newBoard));
         if (newBoard.getMoves().isEmpty()) {
             if (inCheck) {
-                newBoard.setStatus("Checkmate");
+                newBoard.setStatus(BoardStatus.CHECKMATE);
             } else {
-                newBoard.setStatus("Stalemate");
+                newBoard.setStatus(BoardStatus.STALEMATE);
             }
         } else if (inCheck) {
-            newBoard.setStatus("In check!");
+            newBoard.setStatus(BoardStatus.IN_CHECK);
         }
         return newBoard;
     }
