@@ -3,7 +3,7 @@ package com.myApp.web.controller;
 import com.myApp.web.game.Board;
 import com.myApp.web.game.DefaultBoardGenerator;
 import com.myApp.web.game.Move;
-import com.myApp.web.game.logic.BoardMovement;
+import com.myApp.web.game.logic.movement.BoardMovement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
