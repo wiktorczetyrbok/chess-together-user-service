@@ -4,6 +4,7 @@ import com.myApp.web.game.Board;
 import com.myApp.web.game.Move;
 import com.myApp.web.game.Piece;
 import com.myApp.web.game.Square;
+import com.myApp.web.game.logic.check.CheckDetector;
 import com.myApp.web.game.logic.location.SquareLocationFactory;
 import com.myApp.web.game.logic.moveCalc.pieces.PawnMoveCalc;
 import com.myApp.web.game.logic.movement.BoardMovementGenerator;
@@ -21,9 +22,10 @@ public class BoardMovementWithCheckWithPromotion extends BoardMovementWithCheckN
     private final SquareLocationFactory squareLocationFactory;
 
     public BoardMovementWithCheckWithPromotion(BoardMovementGenerator boardMovementGenerator,
+                                               CheckDetector checkDetector,
                                                StatusMapFactory statusMapFactory,
                                                SquareLocationFactory squareLocationFactory) {
-        super(boardMovementGenerator);
+        super(boardMovementGenerator, checkDetector);
         this.statusMapFactory = statusMapFactory;
         this.squareLocationFactory = squareLocationFactory;
     }

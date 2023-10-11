@@ -6,12 +6,14 @@ import com.myApp.web.game.Square;
 import com.myApp.web.game.logic.movement.BoardMovementGenerator;
 import com.myApp.web.game.logic.pieceExtractor.RoyalPieceExtractor;
 import com.myApp.web.game.utils.Player;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 
 import static com.myApp.web.game.utils.PlayerUtils.toggleActivePlayer;
 
+@Component
 public class CheckDetectorImpl implements CheckDetector {
 
     private final RoyalPieceExtractor royalPieceExtractor;
