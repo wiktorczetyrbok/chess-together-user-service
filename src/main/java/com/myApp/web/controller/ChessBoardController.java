@@ -3,8 +3,7 @@ package com.myApp.web.controller;
 import com.myApp.web.game.Board;
 import com.myApp.web.game.DefaultBoardGenerator;
 import com.myApp.web.game.Move;
-import com.myApp.web.game.logic.BoardMovement;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.myApp.web.game.logic.movement.BoardMovement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,15 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChessBoardController {
     public Board board;
-    @Autowired
     private final BoardMovement boardMovement;
 
     public ChessBoardController(BoardMovement boardMovement) {
         this.boardMovement = boardMovement;
-        this.board = (new DefaultBoardGenerator()).generateDefaultBoard();
     }
 
-    @RequestMapping("/game.json")
+    @RequestMapping("/game")
     public Board getGameState(
             @RequestParam(value = "x1", required = false) String x1,
             @RequestParam(value = "y1", required = false) String y1,
@@ -32,7 +29,7 @@ public class ChessBoardController {
             board = boardMovement.makeMoveOnBoard(board, playerMove);
 
         } else {
-            board = (new DefaultBoardGenerator()).generateDefaultBoard();
+            board = DefaultBoardGenerator.generateDefaultBoard();
         }
         return board;
     }
