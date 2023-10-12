@@ -39,7 +39,7 @@ public class BoardMovementWithCheckWithPromotion extends BoardMovementWithCheckN
                 = statusMapFactory.buildStatusMap(board.getActivePlayer(), board.getSquares());
         for (Square square : newBoard.getSquares()) {
             Piece piece = square.getPiece();
-            if (piece != null && piece.getType().equals("Pawn")) {
+            if (piece != null && piece.getType().equals(Type.PAWN)) {
                 SquareLocation pieceLocation = squareLocationFactory.buildSquareLocation(square);
 
                 PawnMoveCalc pawnMoveCalc = new PawnMoveCalc(piece.getOwner(), piece.isHasMoved());

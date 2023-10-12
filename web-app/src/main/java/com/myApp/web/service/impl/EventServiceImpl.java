@@ -58,11 +58,10 @@ public class EventServiceImpl implements EventService {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
 
         if (!event.getAssignedUsers().isEmpty()) {
-            List<UserEntity> users = event.getAssignedUsers();
-            for (UserEntity user : users) {
+            event.getAssignedUsers().forEach(user ->  {
                 user.getEvents().remove(event);
                 userRepository.save(user);
-            }
+            });
         }
 
         eventRepository.deleteById(eventId);
