@@ -1,8 +1,10 @@
 package com.myApp.web.dto;
 
 import com.myApp.web.model.UserEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ClubDto {
     private Long id;

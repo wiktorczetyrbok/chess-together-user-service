@@ -1,4 +1,4 @@
-package com.myApp.web;
+package com.myApp.web.controller;
 
 import com.myApp.web.dto.ClubDto;
 import com.myApp.web.mapper.ClubMapper;
