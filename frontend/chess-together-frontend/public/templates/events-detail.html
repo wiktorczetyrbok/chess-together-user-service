@@ -1,0 +1,111 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Club Create</title>
+    <style>
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 10px;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        img {
+            border-radius: 50%;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+</head>
+<body class="d-flex flex-column">
+<section layout:fragment="body">
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder" th:text="${event.name}"></h1>
+                <p class="lead mb-0" th:text="${event.club.city}"></p>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <a href="#!"><img class="card-img-top" th:src="${event.photoUrl }" width="600" height="450"
+                                      alt="..."/></a>
+                    <div class="card-body">
+                        <div class="small text-muted" th:text="${event.createdOn}"></div>
+                        <h2 class="card-title">About this event</h2>
+                        <p class="card-text" th:text="${event.type}"></p>
+                        <div>
+                            <a th:if="${user.id != null and not event.assignedUsers.contains(user)}"
+                               class="btn btn-primary"
+                               th:href="@{/events/{eventId}/assignUser(eventId=${event.id},userId=${user.id})}">Join</a>
+                            <a th:unless="${user.id != null}" class="btn btn-primary" th:href="@{/login}">Log in to
+                                join</a>
+                            <a th:if="${user.id} == ${event.club.createdBy.id}" class="btn btn-primary"
+                               th:href="@{/events/{eventId}/delete(eventId=${event.id})}">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Categories widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Categories</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a th:href="@{/events/searchByType(type='Classic', name=${name})}">Classic</a>
+                                    </li>
+                                    <li><a th:href="@{/events/searchByType(type='Blitz', name=${name})}">Blitz</a></li>
+                                    <li><a th:href="@{/events/searchByType(type='Bullet', name=${name})}">Bullet</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Participants</div>
+                    <div class="card-body">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Rating</th>
+                                <th>Username</th>
+                                <th>Image</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="player, i : ${assignedUsers}">
+                                <td th:text="${player.rating}"></td>
+                                <td th:text="${player.username}"></td>
+                                <td><img th:src="${player.avatarUrl}" alt="player image" width="50" height="50"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

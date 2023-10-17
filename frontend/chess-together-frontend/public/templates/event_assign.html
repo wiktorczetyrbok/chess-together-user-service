@@ -1,0 +1,29 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Events Create</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+    <section layout:fragment="body" class="py-5">
+        <div class="text-center mb-5">
+            <h1 class="fw-bolder">Do you want to join the tournament?</h1>
+        </div>
+        <div class="container">
+            <div class="text-center">
+                <form role="form" method="post"
+                      th:action="@{/events/{eventId}/assignUser(eventId=${event.id},userId=${user.id})}"
+                      th:object="${event}">
+                    <button type="submit" class="btn btn-primary">Yes, I do</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='@{/events}'">No, thanks
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

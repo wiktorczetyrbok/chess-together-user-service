@@ -1,0 +1,56 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Leaderboard</title>
+    <style>
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 10px;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        img {
+            border-radius: 50%;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <section layout:fragment="body" class="py-5">
+        <h1 style="text-align: center">Top Players</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Rating and World Position</th>
+                <th>Name and Surname</th>
+                <th>Image</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="player, i : ${topPlayers}">
+                <td th:text="${player.rating}"></td>
+                <td th:text="${player.username}"></td>
+                <td><img th:src="${player.photoUrl}" alt="player image" width="50" height="50"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>

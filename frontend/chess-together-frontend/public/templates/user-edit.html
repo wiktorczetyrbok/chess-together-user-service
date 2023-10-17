@@ -1,0 +1,55 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Club Edit</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <section layout:fragment="body" class="py-5">
+        <div class="container">
+            <form role="form" method="post" th:action="@{/user/edit}" th:object="${user}">
+                <input type="hidden" th:field="*{roles}">
+                <input type="hidden" th:field="*{password}">
+                <input type="hidden" th:field="*{username}">
+                <input type="hidden" th:field="*{id}">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                th:field="*{email}"
+                                placeholder="e-mail">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="avatarUrl">Photo Url</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="avatarUrl"
+                                name="avatarUrl"
+                                th:field="*{avatarUrl}"
+                                placeholder="Photo Url">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="rating">Chess rating</label>
+                        <input
+                                type="number"
+                                class="form-control"
+                                id="rating"
+                                name="rating"
+                                th:field="*{rating}"
+                                placeholder="Chess rating">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

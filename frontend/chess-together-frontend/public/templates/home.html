@@ -1,0 +1,85 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Home page</title>
+</head>
+<body class="d-flex flex-column">
+<section layout:fragment="body">
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Chess together</h1>
+                <h1 class="small text-muted">Home page</h1>
+            </div>
+        </div>
+    </header>
+    <!-- Page content-->
+    <div class="container">
+        <div class="row">
+            <!-- Blog entries-->
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Blog post-->
+                        <div class="card mb-4">
+                            <a href="#!">
+                                <img th:if="${user.id != null}" class="card-img-top" th:src="${user.avatarUrl}"
+                                     alt="..."/>
+                                <img th:unless="${user.id != null}" class="card-img-top"
+                                     src="https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg"
+                                     alt="..."/>
+                            </a>
+                            <div class="card-body">
+                                <h1 class="card-title h4">Username:
+                                    <span th:if="${user.id != null}" th:text="${user.username}"></span>
+                                    <span th:unless="${user.id != null}">Unknown</span>
+                                </h1>
+                                <h2 class="small text-muted">Rating:
+                                    <span th:if="${user.id != null}" th:text="${user.rating}"></span>
+                                    <span th:unless="${user.id != null}">Unknown</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Search widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Search for chess clubs</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <form th:action="@{/clubs/search}" class="form-inline my-2 my-lg-0 mb-3">
+                                <input name="query" class="form-control" type="search"
+                                       placeholder="Enter chess club name" aria-label="Enter search term..."
+                                       aria-describedby="button-search"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Categories widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Categories</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a th:href="@{/events/searchByType(type='Classic', name=${name})}">Classic</a>
+                                    </li>
+                                    <li><a th:href="@{/events/searchByType(type='Blitz', name=${name})}">Blitz</a></li>
+                                    <li><a th:href="@{/events/searchByType(type='Bullet', name=${name})}">Bullet</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
