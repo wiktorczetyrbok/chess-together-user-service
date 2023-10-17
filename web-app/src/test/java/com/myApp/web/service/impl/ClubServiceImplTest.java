@@ -6,8 +6,9 @@ import com.myApp.web.model.Club;
 import com.myApp.web.model.UserEntity;
 import com.myApp.web.repository.ClubRepository;
 import com.myApp.web.repository.UserRepository;
-import com.myApp.web.utils.ModelCreator;
+import com.myApp.web.utils.ModelGenerator;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = ClubServiceImpl.class)
+@Tag("integration")
+@SpringBootTest(classes = {ClubServiceImpl.class})
 class ClubServiceImplTest {
 
     @MockBean
@@ -51,7 +53,7 @@ class ClubServiceImplTest {
         SecurityContextHolder.setContext(securityContext);
 
 
-        clubs.addAll(ModelCreator.createClubsForTesting());
+        clubs.addAll(ModelGenerator.createClubsForTesting());
     }
 
     @Test
@@ -108,7 +110,7 @@ class ClubServiceImplTest {
 
         Mockito.verify(clubRepository).deleteById(1L);
     }
-
+    //TODO: implement querying with concat
     @Test
     void searchClubs() {
         String query = "test";
