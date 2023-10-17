@@ -47,10 +47,11 @@ class EventServiceImplTest {
     @MockBean
     private EventRepository eventRepository;
 
-    private ArrayList<Club> clubs = new ArrayList<>();
-    private ArrayList<Event> events = new ArrayList<>();
+    private final ArrayList<Club> clubs = new ArrayList<>();
+    private final ArrayList<Event> events = new ArrayList<>();
 
     private final static String username = "testUser";
+
     @BeforeEach
     public void setUp() {
         Authentication authentication = Mockito.mock(Authentication.class);
@@ -65,6 +66,7 @@ class EventServiceImplTest {
         clubs.addAll(ModelGenerator.createClubsForTesting());
         events.addAll(ModelGenerator.createEventsForTesting());
     }
+
     //TODO: implement querying with concat
     @Test
     void searchEventsByType() {

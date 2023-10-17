@@ -40,7 +40,7 @@ class ClubServiceImplTest {
 
     private final static String username = "testUser";
 
-    private ArrayList<Club> clubs = new ArrayList<>();
+    private final ArrayList<Club> clubs = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
@@ -110,6 +110,7 @@ class ClubServiceImplTest {
 
         Mockito.verify(clubRepository).deleteById(1L);
     }
+
     //TODO: implement querying with concat
     @Test
     void searchClubs() {

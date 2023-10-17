@@ -1,4 +1,4 @@
-package com.myApp.web;
+package com.myApp.web.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

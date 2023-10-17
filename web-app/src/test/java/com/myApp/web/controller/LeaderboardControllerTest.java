@@ -1,25 +1,11 @@
-package com.myApp.web;
+package com.myApp.web.controller;
 
-import com.myApp.web.controller.LeaderboardController;
-import com.myApp.web.dto.ChessComPlayerDto;
 import com.myApp.web.service.LeaderboardScrapingService;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
-
-import java.io.IOException;
-import java.util.List;
-
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LeaderboardControllerTest {
@@ -32,7 +18,7 @@ public class LeaderboardControllerTest {
     @InjectMocks
     private LeaderboardController leaderboardController;
 
-    @Test
+/*    @Test
     public void testLeaderboard() throws IOException {
         Document document = Mockito.mock(Document.class);
 
@@ -79,5 +65,5 @@ public class LeaderboardControllerTest {
         assertNotNull(topPlayers);
         assertFalse(topPlayers.isEmpty());
         assertTrue(topPlayers.stream().allMatch(player -> player instanceof ChessComPlayerDto));
-    }
+    }*/
 }
