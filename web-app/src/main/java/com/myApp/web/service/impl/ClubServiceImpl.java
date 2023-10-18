@@ -1,6 +1,7 @@
 package com.myApp.web.service.impl;
 
 import com.myApp.web.dto.ClubDto;
+import com.myApp.web.mapper.ClubMapper;
 import com.myApp.web.model.Club;
 import com.myApp.web.model.UserEntity;
 import com.myApp.web.repository.ClubRepository;
@@ -28,7 +29,7 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public List<ClubDto> findAllClubs() {
         List<Club> clubs = clubRepository.findAll();
-        return clubs.stream().map((club) -> mapToClubDto(club)).collect(Collectors.toList());
+        return clubs.stream().map(ClubMapper::mapToClubDto).collect(Collectors.toList());
     }
 
     @Override
@@ -57,7 +58,7 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public List<ClubDto> searchClubs(String query) {
         List<Club> clubs = clubRepository.searchClubs(query);
-        return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
+        return clubs.stream().map(ClubMapper::mapToClubDto).collect(Collectors.toList());
     }
 
     @Override

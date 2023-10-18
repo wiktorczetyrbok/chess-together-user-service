@@ -2,6 +2,7 @@ package com.myApp.web.service.impl;
 
 import com.myApp.web.dto.EventDto;
 import com.myApp.web.dto.UserDto;
+import com.myApp.web.mapper.EventMapper;
 import com.myApp.web.model.Club;
 import com.myApp.web.model.Event;
 import com.myApp.web.model.UserEntity;
@@ -43,7 +44,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventDto> findAllEvents() {
         List<Event> events = eventRepository.findAll();
-        return events.stream().map((event) -> mapToEventDto(event)).collect(Collectors.toList());
+        return events.stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
 
     }
 
@@ -58,7 +59,7 @@ public class EventServiceImpl implements EventService {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
 
         if (!event.getAssignedUsers().isEmpty()) {
-            event.getAssignedUsers().forEach(user ->  {
+            event.getAssignedUsers().forEach(user -> {
                 user.getEvents().remove(event);
                 userRepository.save(user);
             });
@@ -70,13 +71,13 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventDto> searchEvents(String query) {
         List<Event> events = eventRepository.searchEvents(query);
-        return events.stream().map(event -> mapToEventDto(event)).collect(Collectors.toList());
+        return events.stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
     }
 
     @Override
     public List<EventDto> searchEventsByType(String type) {
         List<Event> events = eventRepository.searchEventsByType(type);
-        return events.stream().map(event -> mapToEventDto(event)).collect(Collectors.toList());
+        return events.stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
     }
 
     @Override
@@ -100,10 +101,8 @@ public class EventServiceImpl implements EventService {
     public List<UserDto> findAssignedUsers(Long eventId) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event not found"));
 
-        List<UserDto> assignedUsers = event.getAssignedUsers()
+        return event.getAssignedUsers()
                 .stream()
                 .map(user -> mapToUserDto(user)).collect(Collectors.toList());
-
-        return assignedUsers;
     }
 }
