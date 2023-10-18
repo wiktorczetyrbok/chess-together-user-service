@@ -4,11 +4,9 @@ import com.myApp.web.model.UserEntity;
 import com.myApp.web.security.SecurityUtil;
 import com.myApp.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.io.IOException;
 
 @Controller
 public class HomePageController {
@@ -19,15 +17,14 @@ public class HomePageController {
         this.userService = userService;
     }
 
-    @GetMapping("")
-    public String showHomePage(Model model) throws IOException {
-        UserEntity user = new UserEntity();
+    @GetMapping("/home")
+    public ResponseEntity<UserEntity> showHomePage() {
         String username = SecurityUtil.getSessionUser();
         if (username != null) {
-            user = userService.findByUsername(username);
-            model.addAttribute("user", user);
+            UserEntity user = userService.findByUsername(username);
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        model.addAttribute("user", user);
-        return "home";
     }
 }

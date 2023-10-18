@@ -4,17 +4,19 @@ import com.myApp.web.dto.UserDto;
 import com.myApp.web.model.UserEntity;
 import com.myApp.web.security.SecurityUtil;
 import com.myApp.web.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
 
@@ -22,24 +24,30 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users/edit")
-    public String editUserForm(Model model) {
+    @GetMapping("/edit-form")
+    public ResponseEntity<UserEntity> editUserForm() {
         String username = SecurityUtil.getSessionUser();
         Long userId = userService.findByUsername(username).getId();
         Optional<UserEntity> user = userService.findByUserId(userId);
-        model.addAttribute("user", user);
-        return "user-edit";
+
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @PostMapping("/user/edit")
-    public String updateUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result) {
+    @PostMapping("/edit")
+    public ResponseEntity<String> updateUser(@Valid @RequestBody UserDto user, BindingResult result) {
         if (result.hasErrors()) {
-            return "user-edit";
+            return ResponseEntity.badRequest().body("Validation failed");
         }
+
         String username = SecurityUtil.getSessionUser();
         Long userId = userService.findByUsername(username).getId();
         user.setId(userId);
         userService.updateUser(user);
-        return "redirect:/";
+
+        return ResponseEntity.ok("User updated successfully");
     }
 }

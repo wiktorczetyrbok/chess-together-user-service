@@ -3,12 +3,12 @@ package com.myApp.web.controller;
 import com.myApp.web.dto.RegistrationDto;
 import com.myApp.web.model.UserEntity;
 import com.myApp.web.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
@@ -21,33 +21,36 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
-        return "login";
+    public ResponseEntity<String> loginPageInfo() {
+        //TODO: Adjust this URL as needed
+        String loginPageUrl = "/login";
+        return ResponseEntity.ok(loginPageUrl);
     }
 
     @GetMapping("/register")
-    public String getRegisterForm(Model model) {
+    public ResponseEntity<RegistrationDto> getRegisterForm() {
         RegistrationDto user = new RegistrationDto();
-        model.addAttribute("user", user);
-        return "register";
+        return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/register/save")
-    public String register(@Valid @ModelAttribute("user") RegistrationDto user,
-                           BindingResult result, Model model) {
-        UserEntity existingUserEmail = userService.findByEmail(user.getEmail());
-        if (existingUserEmail != null && existingUserEmail.getEmail() != null && !existingUserEmail.getEmail().isEmpty()) {
-            return "redirect:/register?fail";
-        }
-        UserEntity existingUserUsername = userService.findByUsername(user.getUsername());
-        if (existingUserUsername != null && existingUserUsername.getUsername() != null && !existingUserUsername.getUsername().isEmpty()) {
-            return "redirect:/register?fail";
-        }
+    @PostMapping("register/save")
+    public ResponseEntity<?> register(@Valid @RequestBody RegistrationDto user, BindingResult result) {
         if (result.hasErrors()) {
-            model.addAttribute("user", user);
-            return "register";
+            return ResponseEntity.badRequest().body("Validation failed");
         }
+
+        UserEntity existingUserEmail = userService.findByEmail(user.getEmail());
+        UserEntity existingUserUsername = userService.findByUsername(user.getUsername());
+
+        if (existingUserEmail != null) {
+            return ResponseEntity.badRequest().body("Email already exists");
+        }
+
+        if (existingUserUsername != null) {
+            return ResponseEntity.badRequest().body("Username already exists");
+        }
+
         userService.saveUser(user);
-        return "redirect:/clubs?success";
+        return ResponseEntity.ok("Registration successful");
     }
 }

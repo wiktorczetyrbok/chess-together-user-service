@@ -3,11 +3,14 @@ package com.myApp.web.controller;
 import com.myApp.web.dto.ClubDto;
 import com.myApp.web.model.Club;
 import com.myApp.web.model.UserEntity;
+import com.myApp.web.response.ClubCreateFormResponse;
+import com.myApp.web.response.ClubDetailResponse;
+import com.myApp.web.response.ClubListResponse;
 import com.myApp.web.security.SecurityUtil;
 import com.myApp.web.service.ClubService;
 import com.myApp.web.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequestMapping("/clubs")
 public class ClubController {
     private final ClubService clubService;
     private final UserService userService;
@@ -24,80 +28,88 @@ public class ClubController {
         this.userService = userService;
     }
 
-    @GetMapping("/clubs")
-    public String listClubs(Model model) {
-        UserEntity user = new UserEntity();
+
+    @GetMapping("/")
+    public ResponseEntity<ClubListResponse> listClubs() {
+        ClubListResponse response = new ClubListResponse();
+
         List<ClubDto> clubs = clubService.findAllClubs();
+        response.setClubs(clubs);
+
         String username = SecurityUtil.getSessionUser();
         if (username != null) {
-            user = userService.findByUsername(username);
-            model.addAttribute("user", user);
+            UserEntity user = userService.findByUsername(username);
+            response.setUser(user);
         }
-        model.addAttribute("user", user);
-        model.addAttribute("clubs", clubs);
-        return "clubs-list";
+
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/clubs/{clubId}")
-    public String clubDetails(@PathVariable("clubId") long clubId, Model model) {
-        UserEntity user = new UserEntity();
+    @GetMapping("/{clubId}")
+    public ResponseEntity<ClubDetailResponse> clubDetails(@PathVariable("clubId") long clubId) {
+        ClubDetailResponse response = new ClubDetailResponse();
+
         ClubDto clubDto = clubService.findClubById(clubId);
+        response.setClub(clubDto);
+
         String username = SecurityUtil.getSessionUser();
         if (username != null) {
-            user = userService.findByUsername(username);
-            model.addAttribute("user", user);
+            UserEntity user = userService.findByUsername(username);
+            response.setUser(user);
         }
-        model.addAttribute("user", user);
-        model.addAttribute("club", clubDto);
-        return "clubs-detail";
 
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/clubs/new")
-    public String createClubForm(Model model) {
+    @GetMapping("/new")
+    public ResponseEntity<ClubCreateFormResponse> createClubForm() {
+        ClubCreateFormResponse response = new ClubCreateFormResponse();
         Club club = new Club();
-        model.addAttribute("club", club);
-        return "clubs-create";
+        response.setClub(club);
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/clubs/new")
-    public String saveClub(@Valid @ModelAttribute("club") ClubDto clubDto, BindingResult result, Model model) {
+    @PostMapping("/new")
+    public ResponseEntity<String> saveClub(@Valid @RequestBody ClubDto clubDto, BindingResult result) {
         if (result.hasErrors()) {
-            model.addAttribute("club", clubDto);
-            return "clubs-create";
+            return ResponseEntity.badRequest().body("Validation failed");
         }
+
         clubService.saveClub(clubDto);
-        return "redirect:/clubs";
+
+        return ResponseEntity.ok("Club created successfully");
     }
 
-    @GetMapping("/clubs/{clubId}/delete")
-    public String deleteClub(@PathVariable("clubId") long clubId) {
+    @DeleteMapping("/{clubId}")
+    public ResponseEntity<String> deleteClub(@PathVariable("clubId") long clubId) {
         clubService.delete(clubId);
-        return "redirect:/clubs";
+        return ResponseEntity.ok("Club deleted successfully");
     }
 
-    @GetMapping("/clubs/search")
-    public String searchClub(@RequestParam(value = "query") String query, Model model) {
+    @GetMapping("/search")
+    public ResponseEntity<List<ClubDto>> searchClub(@RequestParam(value = "query") String query) {
         List<ClubDto> clubs = clubService.searchClubs(query);
-        model.addAttribute("clubs", clubs);
-        return "clubs-list";
+        return ResponseEntity.ok(clubs);
     }
 
-    @GetMapping("/clubs/{clubId}/edit")
-    public String editClubForm(@PathVariable("clubId") Long clubId, Model model) {
+    @GetMapping("/{clubId}/edit")
+    public ResponseEntity<ClubDto> editClubForm(@PathVariable("clubId") Long clubId) {
         ClubDto club = clubService.findClubById(clubId);
-        model.addAttribute("club", club);
-        return "clubs-edit";
+        return ResponseEntity.ok(club);
     }
 
-    @PostMapping("/clubs/{clubId}/edit")
-    public String updateClub(@PathVariable("clubId") Long clubId,
-                             @Valid @ModelAttribute("club") ClubDto club, BindingResult result) {
+    @PostMapping("/{clubId}/edit")
+    public ResponseEntity<String> updateClub(
+            @PathVariable("clubId") Long clubId,
+            @Valid @RequestBody ClubDto club,
+            BindingResult result) {
         if (result.hasErrors()) {
-            return "clubs-edit";
+            return ResponseEntity.badRequest().body("Validation failed");
         }
+
         club.setId(clubId);
         clubService.updateClub(club);
-        return "redirect:/clubs";
+
+        return ResponseEntity.ok("Club updated successfully");
     }
 }
