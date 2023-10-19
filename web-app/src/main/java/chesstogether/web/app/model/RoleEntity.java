@@ -1,5 +1,7 @@
 package chesstogether.web.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +22,7 @@ public class RoleEntity {
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnoreProperties("roles")
+    @JsonIgnore
     private List<UserEntity> users = new ArrayList<>();
 }

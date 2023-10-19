@@ -1,5 +1,7 @@
 package chesstogether.web.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +38,7 @@ public class Event {
     @JoinColumn(name = "club_id", nullable = false)
     private Club club;
     @ManyToMany(mappedBy = "events")
+    @JsonIgnoreProperties("events")
     private List<UserEntity> assignedUsers = new ArrayList<>();
 
 }

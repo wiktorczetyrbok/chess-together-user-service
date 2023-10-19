@@ -1,5 +1,6 @@
 package chesstogether.web.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,5 +37,6 @@ public class UserEntity {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "event_id", referencedColumnName = "id")}
     )
+    @JsonIgnoreProperties("assignedUsers")
     private List<Event> events = new ArrayList<>();
 }
