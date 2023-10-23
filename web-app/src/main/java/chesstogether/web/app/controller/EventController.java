@@ -41,7 +41,6 @@ public class EventController {
             UserEntity user = userService.findByUsername(username);
             response.setUser(user);
         }
-
         return ResponseEntity.ok(response);
     }
 
@@ -51,7 +50,7 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
-    @GetMapping("/search-by-type")
+    @GetMapping("/search_by_type")
     public ResponseEntity<List<EventDto>> searchByType(@RequestParam(value = "type") String type) {
         List<EventDto> events = eventService.searchEventsByType(type);
         return ResponseEntity.ok(events);
@@ -115,7 +114,7 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{eventId}/assign-user")
+    @PostMapping("/{eventId}/assign_user")
     public ResponseEntity<String> updateUserToEvent(@PathVariable("eventId") Long eventId,
                                                     @RequestParam("userId") Long userId) {
         eventService.assignUserToEvent(eventId, userId);

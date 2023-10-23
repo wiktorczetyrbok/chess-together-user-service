@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/clubs")
 public class ClubController {
@@ -28,7 +29,7 @@ public class ClubController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public ResponseEntity<ClubListResponse> listClubs() {
         ClubListResponse response = new ClubListResponse();
 
@@ -40,7 +41,6 @@ public class ClubController {
             UserEntity user = userService.findByUsername(username);
             response.setUser(user);
         }
-
         return ResponseEntity.ok(response);
     }
 

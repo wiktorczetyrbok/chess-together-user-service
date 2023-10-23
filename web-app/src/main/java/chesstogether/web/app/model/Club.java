@@ -1,7 +1,6 @@
 package chesstogether.web.app.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,10 +33,10 @@ public class Club {
     private LocalDateTime updatedOn;
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties("events")
     private UserEntity createdBy;
     @OneToMany(mappedBy = "club", cascade = CascadeType.REMOVE)
-    @JsonIgnore
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<Event> events = new ArrayList<>();
 
 }

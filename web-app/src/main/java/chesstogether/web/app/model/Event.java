@@ -1,5 +1,7 @@
 package chesstogether.web.app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -36,6 +38,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "club_id", nullable = false)
+    @JsonIdentityReference(alwaysAsId = true)
     private Club club;
     @ManyToMany(mappedBy = "events")
     @JsonIgnoreProperties("events")

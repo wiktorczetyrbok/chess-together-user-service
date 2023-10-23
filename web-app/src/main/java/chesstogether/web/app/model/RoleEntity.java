@@ -23,6 +23,5 @@ public class RoleEntity {
     private String name;
     @ManyToMany(mappedBy = "roles")
     @JsonIgnoreProperties("roles")
-    @JsonIgnore
     private List<UserEntity> users = new ArrayList<>();
 }

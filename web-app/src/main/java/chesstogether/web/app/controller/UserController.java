@@ -20,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/edit-form")
+    @GetMapping("/edit")
     public ResponseEntity<UserEntity> editUserForm() {
         String username = SecurityUtil.getSessionUser();
         Long userId = userService.findByUsername(username).getId();

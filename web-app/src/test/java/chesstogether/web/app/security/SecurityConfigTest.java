@@ -24,7 +24,7 @@ public class SecurityConfigTest {
     }
 
     @Test
-    public void testLoginPageRedirectsAfterWronLogin() throws Exception {
+    public void testLoginPageRedirectsAfterWrongLogin() throws Exception {
 
     }
 

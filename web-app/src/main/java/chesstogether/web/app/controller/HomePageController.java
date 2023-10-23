@@ -20,11 +20,12 @@ public class HomePageController {
     @GetMapping("/home")
     public ResponseEntity<UserEntity> showHomePage() {
         String username = SecurityUtil.getSessionUser();
+        System.out.println(username);
         if (username != null) {
             UserEntity user = userService.findByUsername(username);
             return ResponseEntity.ok(user);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(new UserEntity());
         }
     }
 }

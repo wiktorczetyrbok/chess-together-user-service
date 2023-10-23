@@ -20,7 +20,7 @@ public class LeaderboardController {
         this.scrapingService = scrapingService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("")
     public ResponseEntity<List<ChessComPlayerDto>> getTopPlayers() {
         try {
             List<ChessComPlayerDto> topPlayers = scrapingService.scrapeTopPlayers();
