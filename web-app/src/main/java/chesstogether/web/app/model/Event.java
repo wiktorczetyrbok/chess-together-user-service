@@ -1,5 +1,7 @@
 package chesstogether.web.app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,9 +33,11 @@ public class Event {
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "club_id")
     private Club club;
-    @ManyToMany(mappedBy = "events")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
     private List<UserEntity> assignedUsers = new ArrayList<>();
 }
