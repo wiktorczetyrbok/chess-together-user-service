@@ -1,6 +1,5 @@
 package chesstogether.web.app.model;
 
-import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,9 +18,6 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "clubs")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +32,8 @@ public class Club {
     private LocalDateTime updatedOn;
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
-    @JsonIgnoreProperties("events")
     private UserEntity createdBy;
     @OneToMany(mappedBy = "club", cascade = CascadeType.REMOVE)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<Event> events = new ArrayList<>();
 
 }

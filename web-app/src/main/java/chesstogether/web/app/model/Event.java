@@ -1,8 +1,4 @@
 package chesstogether.web.app.model;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,9 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "events")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +35,5 @@ public class Event {
     @JoinColumn(name = "club_id")
     private Club club;
     @ManyToMany(mappedBy = "events")
-    @JsonIgnoreProperties("events")
     private List<UserEntity> assignedUsers = new ArrayList<>();
-
 }
