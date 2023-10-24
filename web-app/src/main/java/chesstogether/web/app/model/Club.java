@@ -19,6 +19,9 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "clubs")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
