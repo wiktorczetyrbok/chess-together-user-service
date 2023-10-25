@@ -1,6 +1,7 @@
 package chesstogether.web.app.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,9 +20,6 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "clubs")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,12 +32,12 @@ public class Club {
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
-    @JsonIgnoreProperties("events")
     private UserEntity createdBy;
+    @JsonManagedReference
     @OneToMany(mappedBy = "club", cascade = CascadeType.REMOVE)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<Event> events = new ArrayList<>();
 
 }
